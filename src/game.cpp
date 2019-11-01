@@ -5,7 +5,7 @@ using namespace std;
 Game::Game()
 {
 	win = NULL;
-	rend == NULL;
+	rend = NULL;
 }
 
 Game::~Game()
@@ -17,6 +17,7 @@ Game::~Game()
 int Game::Init()
 {
 
+	Uint32 render_flags = SDL_RENDERER_ACCELERATED ;
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0 )
 	{
 		cout << "Error initializing SDL " << SDL_GetError() << endl;
@@ -29,7 +30,7 @@ int Game::Init()
 		return 1;
 	}
 	
-	rend = SDL_CreateRenderer(win, -1, 0);//, render_flags);
+	rend = SDL_CreateRenderer(win, -1, render_flags);
 	if(rend == NULL)
 	{
 		cout << "Error creating renderer :" << SDL_GetError() << endl;
@@ -43,9 +44,7 @@ int Game::Init()
 void Game::Launch()
 {
 
-	Uint32 render_flags = SDL_RENDERER_ACCELERATED ;
 	/*Cell*/Head cell(RECW,RECH,50,50);
-//	SDL_SetRenderDrawColor(rend, 0,255, 0, 255);	
 	SDL_RenderClear(rend);
 	SDL_SetRenderDrawColor(rend, cell.getColorR(),cell.getColorG(), cell.getColorB(), cell.getColorA());
 	SDL_RenderFillRect(rend, cell.getRect());	
@@ -71,27 +70,20 @@ void Game::Launch()
 				{
 					case SDL_SCANCODE_W :
 					case SDL_SCANCODE_UP :
-					//	cell.setY(cell.getY() - speed/30);
 						cell.moveUp();
 						up();
 						break ;
 					case SDL_SCANCODE_A :
 					case SDL_SCANCODE_LEFT :
-						//cell.setX(cell.getX() - speed/30);
-					cell.moveLeft();	
-					left();
+						cell.moveLeft();	
 						break ;
 					case SDL_SCANCODE_S :
 					case SDL_SCANCODE_DOWN :
-						//cell.setY(cell.getY() + speed/30);
 						cell.moveDown();
-						down();
 						break ;
 					case SDL_SCANCODE_D :
 					case SDL_SCANCODE_RIGHT :
-						//cell.setX(cell.getX() + speed/30);
 						cell.moveRight();
-						right();
 						break ;
 					default:
 						break;
@@ -108,11 +100,9 @@ void Game::Launch()
 		cell.setY(0);
 		
 		SDL_RenderClear(rend);
-	//	SDL_SetRenderDrawColor(rend, 0,0, 255, 255);
 		SDL_SetRenderDrawColor(rend, cell.getColorR(),cell.getColorG(), cell.getColorB(), cell.getColorA());
 		SDL_RenderFillRect(rend, cell.getRect());	
 		SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
-//	SDL_SetRenderDrawColor(rend, cell.getColorR(),cell.getColorG(), cell.getColorB(), cell.getColorA());
 		SDL_RenderPresent(rend);
 		SDL_Delay(16);
 		
