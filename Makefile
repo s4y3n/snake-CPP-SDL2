@@ -23,7 +23,7 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 	$(CC) $(CGLAGS) $(INCLUDE) $(OBJECTS) $(LFLAGS) $(LIBS) -o $@
 
 $(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.cpp
-	$(CC) $(CFLAGS) $(INCLUDE) $(INCLUDES) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo "Compiled "$<" successfully" 
 
 #functions.o : functions.cpp
