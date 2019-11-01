@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -I./src 
+CFLAGS = -Wall #-I./src 
 LFLAGS = -L/usr/lib/x86_64-linux-gnu 
 LIBS = -lSDL2
 INCLUDE = -I/usr/include/SDL2 -D_REENTRANT -Iinclude 

@@ -5,12 +5,12 @@
 #include "functions.hpp"
 #include "cell.hpp"
 #include "head.hpp"
-
+#include "snake.hpp"
 
 #define SIZEX 400
 #define SIZEY 400
-#define RECW SIZEX/20
-#define RECH SIZEY/20
+#define RECW SIZEX/21
+#define RECH SIZEY/21
 
 class Game{
 	public :

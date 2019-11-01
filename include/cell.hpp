@@ -2,7 +2,8 @@
 
 #ifndef CELL_H
 #define CELL_H
-enum COLOR {BLACK, WHITE, RED, BLUE, GREEN};
+
+#include "common.hpp"
 class Cell {
 	public :
 		Cell(int W, int H, int X, int Y);
