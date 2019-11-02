@@ -11,6 +11,8 @@ class Head : public Cell{
 		void moveDown();
 		void moveRight();
 		void moveLeft();
+		void setDirection(DIRECTIONS d);
+		int getDirection();
 	private : 
 		int DIRECTION ; 
 };

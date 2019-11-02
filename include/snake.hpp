@@ -27,6 +27,8 @@ class Snake {
 		int getHeadColorB();
 		int getHeadColorA();
 		SDL_Rect* getHeadRect();
+		int getHeadX();
+		int getHeadY();
 	private :
 		Head head;
 		vector<Body> body;

@@ -6,11 +6,12 @@
 #include "cell.hpp"
 #include "head.hpp"
 #include "snake.hpp"
+#include "cible.hpp"
 
 #define SIZEX 400
 #define SIZEY 400
-#define RECW SIZEX/21
-#define RECH SIZEY/21
+#define RECW SIZEX/20
+#define RECH SIZEY/20
 
 class Game{
 	public :
@@ -21,7 +22,8 @@ class Game{
 	private :
 		SDL_Window* win;
 		SDL_Renderer* rend;
-
+		Snake cell;
+		
 
 
 };

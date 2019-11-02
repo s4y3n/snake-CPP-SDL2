@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Game::Game()
+Game::Game() : cell(RECW,RECH,SIZEX/2,SIZEY/2)
 {
 	win = NULL;
 	rend = NULL;
@@ -44,10 +44,14 @@ int Game::Init()
 void Game::Launch()
 {
 
-	/*Cell Head */ Snake cell(RECW,RECH,SIZEX/2,SIZEY/2);
+	//*Cell Head */ Snake cell(RECW,RECH,SIZEX/2,SIZEY/2);
+	Cible cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY);
+	cell.setLimits(SIZEX,SIZEY);
 	SDL_RenderClear(rend);
 	SDL_SetRenderDrawColor(rend, cell.getHeadColorR(),cell.getHeadColorG(), cell.getHeadColorB(), cell.getHeadColorA());
 	SDL_RenderFillRect(rend, cell.getHeadRect());	
+	SDL_SetRenderDrawColor(rend, cible.getColorR(),cible.getColorG(), cible.getColorB(), cible.getColorA());
+	SDL_RenderFillRect(rend, cible.getRect());	
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
 	
@@ -90,20 +94,12 @@ void Game::Launch()
 				}
 			}
 		}
-/*
-	if(cell.getX() + cell.getW() > SIZEX)
-		cell.setX(SIZEX - cell.getW());
-	if(cell.getX() < 0)
-		cell.setX(0);
-	if(cell.getY() + cell.getH() > SIZEX)
-		cell.setY(SIZEY - cell.getH());
-	if(cell.getY() < 0)
-		cell.setY(0);
-	*/	
 		SDL_RenderClear(rend);
 	SDL_SetRenderDrawColor(rend, cell.getHeadColorR(),cell.getHeadColorG(), cell.getHeadColorB(), cell.getHeadColorA());
-	//	SDL_SetRenderDrawColor(rend, cell.getColorR(),cell.getColorG(), cell.getColorB(), cell.getColorA());
-		SDL_RenderFillRect(rend, cell.getHeadRect());	
+		SDL_RenderFillRect(rend, cell.getHeadRect());
+		cible.setNewPosition(cell.getHeadX(), cell.getHeadY());	
+		SDL_SetRenderDrawColor(rend, cible.getColorR(),cible.getColorG(), cible.getColorB(), cible.getColorA());
+		SDL_RenderFillRect(rend, cible.getRect());	
 		SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 		SDL_RenderPresent(rend);
 		SDL_Delay(16);

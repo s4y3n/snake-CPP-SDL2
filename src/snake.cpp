@@ -4,7 +4,8 @@ Snake::Snake(int W, int H, int X, int Y) : head(W,H,X,Y)
 {
 	//head = new Head();
 	bodyLength = 0;
-	
+	limitX = 0;
+	limitY = 0;	
 }
 
 Snake::~Snake()
@@ -36,26 +37,42 @@ void Snake::setLimits(int XMAX, int YMAX)
 
 void Snake::moveUp()
 {
-	moveBody();
-	head.moveUp();
+	if(head.getDirection() != DOWN && head.getY()  > 0)
+	{
+		head.setDirection(UP);		
+		moveBody();
+		head.moveUp();
+	}
 }
  
 void Snake::moveDown()
 {
-	moveBody();
-	head.moveDown();
+	if(head.getDirection() != UP && head.getY() + head.getH() < limitY)
+	{
+		head.setDirection(DOWN);		
+		moveBody();
+		head.moveDown();
+	}
 }
  
 void Snake::moveRight()
 {
-	moveBody();
-	head.moveRight();
+	if(head.getDirection() != LEFT && head.getX() + head.getW() < limitX)
+	{
+		head.setDirection(RIGHT);		
+		moveBody();
+		head.moveRight();
+	}
 }
  
 void Snake::moveLeft()
 {
-	moveBody();
-	head.moveLeft();
+	if(head.getDirection() != RIGHT && head.getX() > 0)
+	{
+		head.setDirection(LEFT);		
+		moveBody();
+		head.moveLeft();
+	}
 }
 
 int Snake::getHeadColorR()
@@ -82,4 +99,13 @@ SDL_Rect* Snake::getHeadRect()
 {
 	return head.getRect();
 }
+
+int Snake::getHeadX()
+{
+	return head.getX();
+}
  
+int Snake::getHeadY()
+{
+	return head.getY();
+} 

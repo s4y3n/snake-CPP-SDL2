@@ -30,3 +30,13 @@ void Head::moveLeft()
 {
  setX(getX() - getW()); 
 }
+
+int Head::getDirection()
+{
+	return DIRECTION;
+}
+
+void Head::setDirection(DIRECTIONS d)
+{
+	DIRECTION = d;
+}
