@@ -3,7 +3,7 @@
 Head::Head(int W, int H, int X, int Y):Cell(W,H,X,Y)
 {
 	setColor(RED);
-	DIRECTION = 0;
+	DIRECTION = IDLE;
 }
 
 Head::~Head()

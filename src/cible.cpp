@@ -26,7 +26,11 @@ void Cible::setNewPosition(int X, int Y)
 	while(!found)
 	{
 		x = rand()%Xmax;
+		if( x%getW() != 0)
+			x = x - x%getW();
 		y = rand()%Ymax;
+		if( y%getH() != 0)
+			y = y - y%getH();
 		if(x != X || y != Y)
 			found = 1;
 	}

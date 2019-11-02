@@ -7,6 +7,7 @@
 #include "cell.hpp"
 #include "head.hpp"
 #include "body.hpp" 
+#include "cible.hpp"
 #ifndef SNAKE_H
 #define SNAKE_H
 
@@ -17,6 +18,7 @@ class Snake {
 		Snake(int W, int H, int X, int Y);
 		~Snake();
 		void setLimits(int XMAX, int YMAX);
+		void move();
 		void moveUp();
 		void moveDown();
 		void moveRight();
@@ -29,9 +31,15 @@ class Snake {
 		SDL_Rect* getHeadRect();
 		int getHeadX();
 		int getHeadY();
+		int targetReached(Cible c);
+		void addTarget(Cible c);
+		int getBodyCount();
+		SDL_Rect* getBodyAt(int pos);
+		void setDirection(DIRECTIONS d);
 	private :
 		Head head;
 		vector<Body> body;
+		vector<Cible> targets;
 		int bodyLength;
 		int limitX;
 		int limitY;
