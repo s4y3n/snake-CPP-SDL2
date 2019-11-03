@@ -120,3 +120,22 @@ int Cell::getColorA()
 {
 	return color.a;
 }
+
+int Cell::getColor(int e)
+{
+	switch(e)
+	{
+		case 1:
+			return getColorR();
+			break;
+		case 2:
+			return getColorG();
+			break;
+		case 3:
+			return getColorB();
+			break;
+		case 4:
+			return getColorA();
+			break;
+	}
+}

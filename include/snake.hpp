@@ -18,16 +18,16 @@ class Snake {
 		Snake(int W, int H, int X, int Y);
 		~Snake();
 		void setLimits(int XMAX, int YMAX);
+		void createBody(int i);
+		void createBodyElement();
 		void move();
 		void moveUp();
 		void moveDown();
 		void moveRight();
 		void moveLeft();
 		void moveBody();
-		int getHeadColorR();
-		int getHeadColorG();
-		int getHeadColorB();
-		int getHeadColorA();
+		int getHeadColor(int e);
+		int getBodyColor(int e);
 		SDL_Rect* getHeadRect();
 		int getHeadX();
 		int getHeadY();
@@ -36,6 +36,8 @@ class Snake {
 		int getBodyCount();
 		SDL_Rect* getBodyAt(int pos);
 		void setDirection(DIRECTIONS d);
+		void getStatus();
+		int targetOutOfBody();
 	private :
 		Head head;
 		vector<Body> body;

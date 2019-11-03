@@ -15,6 +15,7 @@ class Cell {
 		int getColorG();
 		int getColorB();
 		int getColorA();
+		int getColor(int e);
 		void setX(int X);
 		int getX();
 		void setY(int Y);

@@ -3,7 +3,6 @@ using namespace std;
 
 Snake::Snake(int W, int H, int X, int Y) : head(W,H,X,Y)
 {
-	//head = new Head();
 	bodyLength = 0;
 	limitX = 0;
 	limitY = 0;	
@@ -15,7 +14,55 @@ Snake::~Snake()
 	vector<Body>(body).swap(body);
 	targets.clear();
 	vector<Cible>(targets).swap(targets);
+}
 
+void Snake::setLimits(int XMAX, int YMAX)
+{
+	limitX = XMAX;
+	limitY = YMAX;
+}
+
+void Snake::createBody(int i)
+{
+	for(int j = 0; j < i; j++)
+	{
+		Body tmpBody(head.getW(),head.getH(),head.getX(),head.getY()*(j+1) + head.getH());
+		body.push_back(tmpBody);
+	}
+}
+
+void Snake::createBodyElement()
+{
+	cout << "Adding new element" << endl;
+	Body tmpBody(targets.at(0).getW(), targets.at(0).getH(), targets.at(0).getX(), targets.at(0).getY()); 
+	body.push_back(tmpBody);
+	targets.erase(targets.begin());
+}
+
+int Snake::targetOutOfBody()
+{
+	int outOfBody = 1;
+	if(targets.size() == 0)
+	{
+		outOfBody = 0;
+	}
+	else if(body.size() == 0 ) 
+	{
+		if(head.getX() == targets.at(0).getX() && head.getY() == targets.at(0).getY())
+			outOfBody = 0;
+	}
+	else
+	{
+		for(int i = 0; i < body.size() ; i++)
+		{
+			if(body.at(i).getX() == targets.at(0).getX() && body.at(i).getY() == targets.at(0).getY())
+			{
+				outOfBody = 0;
+				break;
+			}	
+		}
+	}
+	return outOfBody;
 }
 
 void Snake::setDirection(DIRECTIONS d)
@@ -56,44 +103,11 @@ void Snake::move()
 				break;
 		}
 	}
-}
-
-void Snake::moveBody()
-{
-	for(int i = body.size() - 1; i >= 0 ; i++)
+	if(targetOutOfBody())
 	{
-		if(i == 0)
-		{
-			body.at(i).setY(head.getY());	
-			body.at(i).setX(head.getX());
-		}else
-		{
-			body.at(i).setY(body.at(i-1).getY());
-			body.at(i).setX(body.at(i-1).getX());
-		}
+		createBodyElement();
+		getStatus();
 	}
-/*
-	if(body.size() == 0 && head.getX() == targets.front().getX() && head.getY() == targets.front().getY())
-	{
-		cout << "HERE" << endl;
-		Body tmpBody(targets.front().getW(), targets.front().getH(),targets.front().getX(),targets.front().getY());
-		targets.erase(targets.begin());
-		body.push_back(tmpBody);
-	}
-	else if(body.back().getX() == targets.front().getX() && body.back().getY() == targets.front().getY())
-	{
-		cout << "HERE2" << endl;
-		Body tmpBody(targets.front().getW(), targets.front().getH(),targets.front().getX(),targets.front().getY());
-		targets.erase(targets.begin());
-		body.push_back(tmpBody);
-	}
-*/
-}
-
-void Snake::setLimits(int XMAX, int YMAX)
-{
-	limitX = XMAX;
-	limitY = YMAX;
 }
 
 void Snake::moveUp()
@@ -136,24 +150,31 @@ void Snake::moveLeft()
 	}
 }
 
-int Snake::getHeadColorR()
+
+void Snake::moveBody()
 {
-	return head.getColorR();
+	for(int i = body.size() - 1; i >= 0 ; i--)
+	{
+		if(i == 0)
+		{
+			body.at(i).setY(head.getY());	
+			body.at(i).setX(head.getX());
+		}else
+		{
+			body.at(i).setY(body.at(i-1).getY());
+			body.at(i).setX(body.at(i-1).getX());
+		}
+	}
 }
 
-int Snake::getHeadColorG()
+int Snake::getHeadColor(int e)
 {
-	return head.getColorG();
+	return head.getColor(e);
 }
 
-int  Snake::getHeadColorB()
+int Snake::getBodyColor(int e)
 {
-	return head.getColorB();
-}
-
-int Snake::getHeadColorA()
-{
-	return head.getColorR();
+	return body.at(0).getColor(e);
 }
 
 SDL_Rect* Snake::getHeadRect()
@@ -171,13 +192,8 @@ int Snake::getHeadY()
 	return head.getY();
 }
 
-
 int Snake::targetReached(Cible c)
 {
-//	cout << "head X : " << head.getX() << endl;
-//	cout << "head Y : " << head.getY() << endl;
-//	cout << "cible X : " << c.getX() << endl;
-//	cout << "cible Y : " << c.getY() << endl;
 	if(head.getX() == c.getX() && head.getY() == c.getY())
 	{
 		addTarget(c);
@@ -197,8 +213,13 @@ int Snake::getBodyCount()
 	return body.size();
 }
 
-
 SDL_Rect* Snake::getBodyAt(int pos)
 {
 	return body[pos].getRect();
+}
+
+void Snake::getStatus()
+{
+	cout << "Body count : " << body.size() << endl;
+	cout << "targets count : " << targets.size() << endl;
 }

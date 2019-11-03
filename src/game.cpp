@@ -18,7 +18,7 @@ Uint32 my_callbackfunc(Uint32 interval, void *param)
 	return(interval);
 }
 
-Game::Game() : cell(RECW,RECH,SIZEX/2,SIZEY/2)
+Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2)
 {
 	win = NULL;
 	rend = NULL;
@@ -41,7 +41,7 @@ int Game::Init()
 		cout << "Error initializing SDL " << SDL_GetError() << endl;
 		return 1;
 	}
-	win = SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SIZEX, SIZEY, 0);
+	win = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SIZEX, SIZEY, 0);
 	if(win == NULL)
 	{
 		cout << "Error creating window : " << SDL_GetError() << endl;
@@ -55,28 +55,40 @@ int Game::Init()
 		return 1;
 	}
 	SDL_RenderSetLogicalSize(rend,SIZEX,SIZEY);
+	
+	snake.setLimits(SIZEX,SIZEY);
 	return 0;
 
 }
 
+void Game::DrawHead()
+{
+	SDL_RenderClear(rend);
+	SDL_SetRenderDrawColor(rend, snake.getHeadColor(1),snake.getHeadColor(2), snake.getHeadColor(3), snake.getHeadColor(4));
+	SDL_RenderFillRect(rend, snake.getHeadRect());	
+}
+
+void Game::DrawBody()
+{
+	for(int i = 0 ; i < snake.getBodyCount() ; i++)
+	{
+		SDL_SetRenderDrawColor(rend, snake.getBodyColor(1),snake.getBodyColor(2), snake.getBodyColor(3), snake.getBodyColor(4));
+		SDL_RenderFillRect(rend, snake.getBodyAt(i));
+	}
+}
+
 void Game::Launch()
 {
-
-	//*Cell Head */ Snake cell(RECW,RECH,SIZEX/2,SIZEY/2);
-	cell.setLimits(SIZEX,SIZEY);
+	DrawHead();
 	Cible cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY);
-	SDL_RenderClear(rend);
-	SDL_SetRenderDrawColor(rend, cell.getHeadColorR(),cell.getHeadColorG(), cell.getHeadColorB(), cell.getHeadColorA());
-	SDL_RenderFillRect(rend, cell.getHeadRect());	
-	SDL_SetRenderDrawColor(rend, cible.getColorR(),cible.getColorG(), cible.getColorB(), cible.getColorA());
+	SDL_SetRenderDrawColor(rend, cible.getColor(1),cible.getColor(2), cible.getColor(3), cible.getColor(4));
 	SDL_RenderFillRect(rend, cible.getRect());	
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
 	
 	SDL_TimerID my_timerID = SDL_AddTimer(delay, my_callbackfunc,0);
 	int close = 0;
-	int speed = 300;
-	
+	int action = 0;	
 	while(!close)
 	{
 		SDL_Event event;
@@ -88,30 +100,43 @@ void Game::Launch()
 					close = 1;
 					break;
 				case SDL_USEREVENT :
-					cell.move();
+					snake.move();
+					action = 0;
 					break;
 				case SDL_KEYDOWN :
 				switch(event.key.keysym.scancode)
 				{
 					case SDL_SCANCODE_W :
 					case SDL_SCANCODE_UP :
-//						cell.moveUp();
-						cell.setDirection(UP);
+						if(!action)
+						{
+							snake.setDirection(UP);
+							action = 1;
+						}
 						break ;
 					case SDL_SCANCODE_A :
 					case SDL_SCANCODE_LEFT :
-						//cell.moveLeft();	
-						cell.setDirection(LEFT);
+						if(!action)
+						{
+							snake.setDirection(LEFT);
+							action = 1;
+						}
 						break ;
 					case SDL_SCANCODE_S :
 					case SDL_SCANCODE_DOWN :
-					//	cell.moveDown();
-						cell.setDirection(DOWN);
+						if(!action)
+						{
+							snake.setDirection(DOWN);
+							action = 1;
+						}
 						break ;
 					case SDL_SCANCODE_D :
 					case SDL_SCANCODE_RIGHT :
-					//	cell.moveRight();
-						cell.setDirection(RIGHT);
+						if(!action)
+						{
+							snake.setDirection(RIGHT);
+							action = 1;
+						}
 						break ;
 					default:
 						break;
@@ -120,25 +145,17 @@ void Game::Launch()
 		}
 		SDL_RenderClear(rend);
 		// Drow head
-		SDL_SetRenderDrawColor(rend, cell.getHeadColorR(),cell.getHeadColorG(), cell.getHeadColorB(), cell.getHeadColorA());
-		SDL_RenderFillRect(rend, cell.getHeadRect());
-
-		if(cell.targetReached(cible))
-		{
-			cible.setNewPosition(cell.getHeadX(), cell.getHeadY());	
-		}
-
+		DrawHead();
 		// Drow target
+		if(snake.targetReached(cible))
+		{
+			cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
+		}
 		SDL_SetRenderDrawColor(rend, cible.getColorR(),cible.getColorG(), cible.getColorB(), cible.getColorA());
 		SDL_RenderFillRect(rend, cible.getRect());	
-	
 		// Drow body
-		SDL_SetRenderDrawColor(rend, cell.getHeadColorR(),cell.getHeadColorG(), cell.getHeadColorB(), cell.getHeadColorA());
-		for(int i = 0 ; i < cell.getBodyCount() ; i++)
-		{
-			SDL_RenderFillRect(rend, cell.getBodyAt(i));
-		}
-
+		DrawBody();
+		// Draw Background 
 		SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 		SDL_RenderPresent(rend);
 //		SDL_Delay(16);

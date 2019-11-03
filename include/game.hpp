@@ -18,15 +18,13 @@ class Game{
 		Game();
 		~Game();
 		int Init();
-	//	static Uint32 TimerCallBack(Uint32 interval, void *param);
-	//	void startTimer();
 		void Launch();
+		void DrawHead();
+		void DrawBody();
 	private :
 		SDL_Window* win;
 		SDL_Renderer* rend;
-		Snake cell;
+		Snake snake;
+//		Cible cible;
 		int delay ;
-		
-
-
 };
