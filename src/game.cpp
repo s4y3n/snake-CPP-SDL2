@@ -1,5 +1,4 @@
-#include "game.hpp" 
-
+#include "game.hpp"
 using namespace std;
 
 Uint32 my_callbackfunc(Uint32 interval, void *param)
@@ -32,13 +31,22 @@ Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2)
 	PauseTextPosition.y = SIZEY/2 - 40;
 	PauseTextPosition.w = SIZEX - 100;
 	PauseTextPosition.h = 80;
-	// Lost Test
+	// Lost Display
 	LostText = NULL;
 	LostTextColor = {0,255,0};
 	LostTextPosition.x = 50;
-	LostTextPosition.y = SIZEY/2 - 40;
+	LostTextPosition.y = SIZEY/4;
 	LostTextPosition.w = SIZEX - 100;
 	LostTextPosition.h = 80;
+	//Score Display
+	ScoreText = NULL;
+	ScoreTextColor = {0,255,0};
+	ScoreTextPosition.x = 50;
+	ScoreTextPosition.y = SIZEY/2;
+	ScoreTextPosition.w = SIZEX-100;
+	ScoreTextPosition.h = 80;
+	
+	// COLORS ! 
 	bodyColor.r = 0;
 	bodyColor.g = 0;
 	bodyColor.b = 255;
@@ -47,6 +55,9 @@ Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2)
 	targetColor.g = 255;
 	targetColor.b = 0;
 	targetColor.a = 0;
+	// Score :
+	score = 0;
+//	scoreStr = NULL;
 }
 
 Game::~Game()
@@ -66,6 +77,8 @@ void Game::Quit()
 		SDL_FreeSurface(PauseText);
 	if(LostText != NULL)
 		SDL_FreeSurface(LostText);
+	if(ScoreText != NULL)
+		SDL_FreeSurface(ScoreText);
 	SDL_Quit();
 //	cout << "Here" << endl;
 }
@@ -239,6 +252,7 @@ void Game::Launch()
 		// Drow target
 			if(snake.targetReached(cible))
 			{
+				score++;
 				cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
 			}
 			DrawTarget(cible);
@@ -270,6 +284,17 @@ void Game::Pause()
 
 void Game::Lost()
 {
+	stringstream scoreStr;
+	scoreStr << score;
+	ScoreText = TTF_RenderText_Solid(Font, scoreStr.str().c_str(), LostTextColor);
+	if(ScoreText == NULL)
+	{
+		cout << "Enable to set scoreText" << endl;
+	}
+	
+	ScoreTextMessage = SDL_CreateTextureFromSurface(rend,ScoreText);
+	SDL_RenderCopy(rend,ScoreTextMessage,NULL,&ScoreTextPosition);
+
 	LostTextMessage = SDL_CreateTextureFromSurface(rend,LostText);
 	SDL_RenderCopy(rend,LostTextMessage,NULL,&LostTextPosition);
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);

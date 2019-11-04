@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall #-I./src 
+CFLAGS = -Wall -g#-I./src 
 LFLAGS = -L/usr/lib/x86_64-linux-gnu 
 LIBS = -lSDL2 -lSDL2_ttf
 INCLUDE = -I/usr/include/SDL2 -D_REENTRANT -Iinclude 
@@ -21,6 +21,7 @@ all :
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	mkdir -p $(BINDIR)
+	cp fonts/*.ttf $(BINDIR)
 	$(CC) $(CGLAGS) $(INCLUDE) $(OBJECTS) $(LFLAGS) $(LIBS) -o $@
 
 $(OBJECTS) : $(OBJDIR)/%.o : $(SRCDIR)/%.cpp

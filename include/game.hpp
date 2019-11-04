@@ -3,6 +3,8 @@
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+#include <sstream> 
+#include <string>
 #include "functions.hpp"
 #include "cell.hpp"
 #include "head.hpp"
@@ -37,13 +39,21 @@ class Game{
 		SDL_Color PauseTextColor;
 		SDL_Texture* PauseTextMessage;
 		SDL_Rect PauseTextPosition ;
-		// Pause Display 
+		// Lost Display 
 		SDL_Surface *LostText ;
 		SDL_Color LostTextColor;
 		SDL_Texture* LostTextMessage;
 		SDL_Rect LostTextPosition ;
-		// Lost Display 
+		// Score Display 
+		SDL_Surface *ScoreText ;
+		SDL_Color ScoreTextColor;
+		SDL_Texture* ScoreTextMessage;
+		SDL_Rect ScoreTextPosition ;
+
 		Snake snake;
 		SDL_Color bodyColor ;
 		SDL_Color targetColor;
+		// SCORE :
+		int score;
+//		stringstream scoreStr;
 };
