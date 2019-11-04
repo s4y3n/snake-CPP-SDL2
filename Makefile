@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -Wall #-I./src 
 LFLAGS = -L/usr/lib/x86_64-linux-gnu 
-LIBS = -lSDL2
+LIBS = -lSDL2 -lSDL2_ttf
 INCLUDE = -I/usr/include/SDL2 -D_REENTRANT -Iinclude 
 SRCDIR = src
 INCDIR = include 

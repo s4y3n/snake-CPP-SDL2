@@ -13,6 +13,7 @@ class Head : public Cell{
 		void moveLeft();
 		void setDirection(DIRECTIONS d);
 		int getDirection();
+		Cell getnextCell();
 	private : 
 		int DIRECTION ; 
 };

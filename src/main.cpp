@@ -26,7 +26,10 @@ int main()
 {
 	Game game;
 	if (game.Init())
+	{
+		game.Quit();
 		return 1;
+	}
 	game.Launch();
 	return 0;
 

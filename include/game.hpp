@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_ttf.h>
 #include <iostream>
 #include "functions.hpp"
 #include "cell.hpp"
@@ -21,10 +22,28 @@ class Game{
 		void Launch();
 		void DrawHead();
 		void DrawBody();
+		void DrawTarget(Cible cible);
+		void Pause();
+		void Quit();
+		void Lost();
 	private :
 		SDL_Window* win;
 		SDL_Renderer* rend;
-		Snake snake;
-//		Cible cible;
+		SDL_TimerID my_timerID;
 		int delay ;
+		// Pause Display 
+		TTF_Font* Font;
+		SDL_Surface *PauseText ;
+		SDL_Color PauseTextColor;
+		SDL_Texture* PauseTextMessage;
+		SDL_Rect PauseTextPosition ;
+		// Pause Display 
+		SDL_Surface *LostText ;
+		SDL_Color LostTextColor;
+		SDL_Texture* LostTextMessage;
+		SDL_Rect LostTextPosition ;
+		// Lost Display 
+		Snake snake;
+		SDL_Color bodyColor ;
+		SDL_Color targetColor;
 };

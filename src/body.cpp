@@ -30,3 +30,12 @@ void Body::moveLeft()
 {
  setX(getX() - getW()); 
 }
+
+int Body::inCell(Cell c)
+{
+	int result = 0;
+	if(c.getX() == getX() && c.getY() == getY())
+		result = 1;
+	return result;
+}
+

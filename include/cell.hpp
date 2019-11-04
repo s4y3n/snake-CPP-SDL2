@@ -7,6 +7,7 @@
 class Cell {
 	public :
 		Cell(int W, int H, int X, int Y);
+		Cell(const Cell &c);
 		~Cell();
 		
 		SDL_Rect* getRect();
@@ -16,6 +17,7 @@ class Cell {
 		int getColorB();
 		int getColorA();
 		int getColor(int e);
+		void setPosition(int X, int Y);
 		void setX(int X);
 		int getX();
 		void setY(int Y);

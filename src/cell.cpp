@@ -6,10 +6,14 @@ Cell::Cell(int W, int H, int X, int Y)
 	rect.h = H;
 	rect.x = X;
 	rect.y = Y;
-//	color.r = 0; // BLACK
-//	color.g = 0;
-//	color.b = 0;
-//	color.a = 0;
+}
+
+Cell::Cell(const Cell &c)
+{
+	rect.w = c.rect.w;
+	rect.h = c.rect.h;
+	rect.x = c.rect.x;
+	rect.y = c.rect.y;
 }
 
 Cell::~Cell()
@@ -24,7 +28,7 @@ void Cell::setColor(COLOR c)
 		color.r = 255;
 		color.g = 255;
 		color.b = 255;
-		color.a = 255;
+		color.a = 0;
 	}
 	else if(c == BLACK)
 	{
@@ -35,10 +39,10 @@ void Cell::setColor(COLOR c)
 	}
 	else if(c == GREEN)
 	{
-		color.r = 0;
+		color.r = 255;
 		color.g = 255;
-		color.b = 0;
-		color.a = 255;
+		color.b = 255;
+		color.a = 0;
 	}
 	else if(c == BLUE)
 	{
@@ -54,6 +58,12 @@ void Cell::setColor(COLOR c)
 		color.b = 0;
 		color.a = 0;
 	}
+}
+
+void Cell::setPosition(int X,int Y)
+{
+	setX(X);
+	setY(Y);
 }
 
 void Cell::setX(int X)
@@ -138,4 +148,5 @@ int Cell::getColor(int e)
 			return getColorA();
 			break;
 	}
+	return 0;
 }

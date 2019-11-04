@@ -21,8 +21,32 @@ Uint32 my_callbackfunc(Uint32 interval, void *param)
 Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2)
 {
 	win = NULL;
-	rend = NULL;
-	delay = 1000;
+	rend = NULL; 
+	delay = 500;
+	////// Message init 
+	Font = NULL;
+	// Pause display
+	PauseText = NULL;
+	PauseTextColor = {0,255,0};
+	PauseTextPosition.x = 50;
+	PauseTextPosition.y = SIZEY/2 - 40;
+	PauseTextPosition.w = SIZEX - 100;
+	PauseTextPosition.h = 80;
+	// Lost Test
+	LostText = NULL;
+	LostTextColor = {0,255,0};
+	LostTextPosition.x = 50;
+	LostTextPosition.y = SIZEY/2 - 40;
+	LostTextPosition.w = SIZEX - 100;
+	LostTextPosition.h = 80;
+	bodyColor.r = 0;
+	bodyColor.g = 0;
+	bodyColor.b = 255;
+	bodyColor.a = 0;
+	targetColor.r = 0;
+	targetColor.g = 255;
+	targetColor.b = 0;
+	targetColor.a = 0;
 }
 
 Game::~Game()
@@ -30,7 +54,21 @@ Game::~Game()
 
 }
 
-
+void Game::Quit()
+{	
+	SDL_RemoveTimer(my_timerID);
+	SDL_DestroyRenderer(rend);
+	SDL_DestroyWindow(win);
+	if(Font != NULL)
+		TTF_CloseFont(Font);
+	TTF_Quit();
+	if(PauseText != NULL)
+		SDL_FreeSurface(PauseText);
+	if(LostText != NULL)
+		SDL_FreeSurface(LostText);
+	SDL_Quit();
+//	cout << "Here" << endl;
+}
 
 int Game::Init()
 {
@@ -54,8 +92,36 @@ int Game::Init()
 		cout << "Error creating renderer :" << SDL_GetError() << endl;
 		return 1;
 	}
-	SDL_RenderSetLogicalSize(rend,SIZEX,SIZEY);
+
+
+	if(TTF_Init() == -1)
+	{
+		cout << "Error enable to init TTF : " << TTF_GetError() << endl;
+		return 1;
+	}
+	Font = TTF_OpenFont("BebasNeue-Regular.ttf", 16);
+	if(Font == NULL)
+	{
+		cout << "Enable to OpenFont : " << TTF_GetError() << endl;
+		return 1;
+	}
+	PauseText = TTF_RenderText_Solid(Font, "Pause", PauseTextColor);
+	if(PauseText == NULL)
+	{
+		cout << "Enable to Open text" << endl;
+
+	}
+
+	LostText = TTF_RenderText_Solid(Font, "Lost !", LostTextColor);
+	if(LostText == NULL)
+	{
+		cout << "Enable to Open text" << endl;
+
+	}
+
 	
+	
+	SDL_RenderSetLogicalSize(rend,SIZEX,SIZEY);	
 	snake.setLimits(SIZEX,SIZEY);
 	return 0;
 
@@ -72,22 +138,31 @@ void Game::DrawBody()
 {
 	for(int i = 0 ; i < snake.getBodyCount() ; i++)
 	{
-		SDL_SetRenderDrawColor(rend, snake.getBodyColor(1),snake.getBodyColor(2), snake.getBodyColor(3), snake.getBodyColor(4));
+		//SDL_SetRenderDrawColor(rend, snake.getBodyColor(1),snake.getBodyColor(2), snake.getBodyColor(3), snake.getBodyColor(4));
+		SDL_SetRenderDrawColor(rend, bodyColor.r,bodyColor.g, bodyColor.b, bodyColor.a);
 		SDL_RenderFillRect(rend, snake.getBodyAt(i));
 	}
+}
+
+void Game::DrawTarget(Cible cible)
+{
+	//SDL_SetRenderDrawColor(rend, cible.getColor(1),cible.getColor(2), cible.getColor(3), cible.getColor(4));
+	SDL_SetRenderDrawColor(rend, targetColor.r,targetColor.g, targetColor.b, targetColor.a);
+	SDL_RenderFillRect(rend, cible.getRect());	
 }
 
 void Game::Launch()
 {
 	DrawHead();
 	Cible cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY);
-	SDL_SetRenderDrawColor(rend, cible.getColor(1),cible.getColor(2), cible.getColor(3), cible.getColor(4));
-	SDL_RenderFillRect(rend, cible.getRect());	
+	DrawTarget(cible);
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
 	
-	SDL_TimerID my_timerID = SDL_AddTimer(delay, my_callbackfunc,0);
+	my_timerID = SDL_AddTimer(delay, my_callbackfunc,0);
 	int close = 0;
+	int pause = 0;
+	int lost = 0;
 	int action = 0;	
 	while(!close)
 	{
@@ -100,15 +175,28 @@ void Game::Launch()
 					close = 1;
 					break;
 				case SDL_USEREVENT :
-					snake.move();
-					action = 0;
+					if(!pause && !lost)
+					{
+						lost = snake.contact();
+						if(!lost)
+						{
+							snake.move();
+							snake.getStatus();
+							action = 0;
+						}
+					}
 					break;
 				case SDL_KEYDOWN :
 				switch(event.key.keysym.scancode)
 				{
+					case SDL_SCANCODE_ESCAPE:
+					case SDL_SCANCODE_SPACE:
+						if(!lost)
+							pause = !pause;
+						break;
 					case SDL_SCANCODE_W :
 					case SDL_SCANCODE_UP :
-						if(!action)
+						if(!action && !pause)
 						{
 							snake.setDirection(UP);
 							action = 1;
@@ -116,7 +204,7 @@ void Game::Launch()
 						break ;
 					case SDL_SCANCODE_A :
 					case SDL_SCANCODE_LEFT :
-						if(!action)
+						if(!action && !pause)
 						{
 							snake.setDirection(LEFT);
 							action = 1;
@@ -124,7 +212,7 @@ void Game::Launch()
 						break ;
 					case SDL_SCANCODE_S :
 					case SDL_SCANCODE_DOWN :
-						if(!action)
+						if(!action && !pause)
 						{
 							snake.setDirection(DOWN);
 							action = 1;
@@ -132,7 +220,7 @@ void Game::Launch()
 						break ;
 					case SDL_SCANCODE_D :
 					case SDL_SCANCODE_RIGHT :
-						if(!action)
+						if(!action && !pause)
 						{
 							snake.setDirection(RIGHT);
 							action = 1;
@@ -144,25 +232,46 @@ void Game::Launch()
 			}
 		}
 		SDL_RenderClear(rend);
-		// Drow head
-		DrawHead();
-		// Drow target
-		if(snake.targetReached(cible))
+		if(!pause && !lost)
 		{
-			cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
-		}
-		SDL_SetRenderDrawColor(rend, cible.getColorR(),cible.getColorG(), cible.getColorB(), cible.getColorA());
-		SDL_RenderFillRect(rend, cible.getRect());	
+		// Drow head
+			DrawHead();
+		// Drow target
+			if(snake.targetReached(cible))
+			{
+				cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
+			}
+			DrawTarget(cible);
 		// Drow body
-		DrawBody();
+			DrawBody();
 		// Draw Background 
-		SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
-		SDL_RenderPresent(rend);
-//		SDL_Delay(16);
-		
+			SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+			SDL_RenderPresent(rend);		
+		}
+		else if(pause)
+		{
+			Pause();
+		}
+		else 
+		{
+			Lost();
+		}
 	}
-	SDL_RemoveTimer(my_timerID);
-	SDL_DestroyRenderer(rend);
-	SDL_DestroyWindow(win);
-	SDL_Quit();
+	Quit();
+}
+
+void Game::Pause()
+{
+	PauseTextMessage = SDL_CreateTextureFromSurface(rend,PauseText);
+	SDL_RenderCopy(rend,PauseTextMessage,NULL,&PauseTextPosition);
+	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	SDL_RenderPresent(rend);
+}
+
+void Game::Lost()
+{
+	LostTextMessage = SDL_CreateTextureFromSurface(rend,LostText);
+	SDL_RenderCopy(rend,LostTextMessage,NULL,&LostTextPosition);
+	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	SDL_RenderPresent(rend);
 }

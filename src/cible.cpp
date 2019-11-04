@@ -6,7 +6,7 @@
 Cible::Cible(int W, int H, int X, int Y, int XMAX, int YMAX):Cell(W,H,X,Y)
 {
 	srand(time(NULL));
-	setColor(GREEN);
+	setColor(RED);
 	DIRECTION = 0 ; // to get rid of 
 	active = 1;
 	Xmax = XMAX;

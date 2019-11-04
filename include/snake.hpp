@@ -38,6 +38,7 @@ class Snake {
 		void setDirection(DIRECTIONS d);
 		void getStatus();
 		int targetOutOfBody();
+		int contact();
 	private :
 		Head head;
 		vector<Body> body;

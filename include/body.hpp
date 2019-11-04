@@ -11,6 +11,7 @@ class Body : public Cell{
 		void moveDown();
 		void moveRight();
 		void moveLeft();
+		int inCell(Cell c);
 	private : 
 		int DIRECTION ; 
 };

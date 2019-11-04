@@ -220,6 +220,45 @@ SDL_Rect* Snake::getBodyAt(int pos)
 
 void Snake::getStatus()
 {
+	cout << "Head : " << endl;
+	cout << "HX = " << head.getX() << endl;
+	cout << "HY = " << head.getY() << endl;
 	cout << "Body count : " << body.size() << endl;
+	for(int i = 0; i < body.size();i++)
+	{
+		cout << "Body element : " << i << endl;
+		cout << "X = " << body.at(i).getX() << endl; 
+		cout << "Y = " << body.at(i).getY() << endl; 
+	}
 	cout << "targets count : " << targets.size() << endl;
 }
+
+int Snake::contact()
+{
+		Cell nextCell(head.getnextCell());
+		cout << "Next cell " << endl;
+		cout <<"X = " << nextCell.getX() << endl;
+		cout <<"Y = " << nextCell.getY() << endl;
+	if(head.getY() == 0 && head.getDirection() == UP)
+	{
+		return 1;
+	}else if(head.getY() == limitY - head.getH() && head.getDirection() == DOWN)
+	{
+		return 1;
+	}else if(head.getX() == limitX - head.getW() && head.getDirection() == RIGHT)
+	{
+		return 1;
+	}else if(head.getX() == 0 && head.getDirection() == LEFT)
+	{
+			return 1;
+	}else if(body.size() != 0) // Test head contact with body
+	{
+		for(int i = 0 ; i < body.size() ; i++)
+		{
+			if(body.at(i).inCell(nextCell))
+				return 1;
+		}
+	}
+	return 0;
+}
+ 

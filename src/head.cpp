@@ -40,3 +40,24 @@ void Head::setDirection(DIRECTIONS d)
 {
 	DIRECTION = d;
 }
+
+Cell Head::getnextCell()
+{
+	Cell cell(getW(),getH(),0,0);
+	switch(DIRECTION){
+		case UP :
+			cell.setPosition(getX(),getY() - getH());
+			break;
+		case DOWN :
+			cell.setPosition(getX(),getY() + getH());
+			break;
+		case LEFT :
+			cell.setPosition(getX() - getW(),getY());
+			break;
+		case RIGHT :
+			cell.setPosition(getX() + getW(),getY());
+			break;
+	}
+	return cell;
+}
+
