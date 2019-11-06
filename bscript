@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ ! -d build/linux64 ]; then
+	cmake -H. -Bbuild/linux64 -DCMAKE_BUILD_TYPE=Debug
+else 
+	rm -r build/linux64 && cmake -H. -Bbuild/linux64 -DCMAKE_BUILD_TYPE=Debug
+fi
+
+
+if [ -d build/win64 ]; then
+	rm -r build/win64 && cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/x86_64-w64-mingw32.cmake
+else 
+ cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/x86_64-w64-mingw32.cmake
+fi
