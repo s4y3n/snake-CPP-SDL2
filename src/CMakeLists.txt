@@ -1,8 +1,8 @@
 include_directories(${CMAKE_SOURCE_DIR}/include)
-message("CMAKE_SYSTEM_NAME : l${CMAKE_SYSTEM_NAME}l")
+message("CMAKE_SYSTEM_NAME : ${CMAKE_SYSTEM_NAME}")
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 	message("COMPILE FOR WINDOWS")	
-	set(CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/lib/SDL2_64/x86_64-w64-mingw32/)
+	set(CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/lib/x86_64-w64-mingw32/)
 else() 
 	message("COMPILE FOR LINUX")	
 endif()
@@ -26,8 +26,8 @@ target_include_directories(SNAKE PUBLIC ${SDL2_INCLUDE_DIRS} ${SDL2_TFF_INCLUDE_
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 	message("Linking for FOR WINDOWS")	
-	target_link_libraries(SNAKE ${CMAKE_SOURCE_DIR}/lib/SDL2_64/x86_64-w64-mingw32/libSDL2.a 
-		${CMAKE_SOURCE_DIR}/lib/SDL2_64/x86_64-w64-mingw32/libSDL2_ttf.a
+	target_link_libraries(SNAKE ${CMAKE_SOURCE_DIR}/lib/x86_64-w64-mingw32/libSDL2.a 
+		${CMAKE_SOURCE_DIR}/lib/x86_64-w64-mingw32/libSDL2_ttf.a
 	)
 else()
 	message("Linking for FOR Linux")	
