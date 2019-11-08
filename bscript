@@ -5,13 +5,15 @@ if [ $# -eq 0 ] ;then
 	exit 1
 fi
 
+[ ! -d build ] && mkdir build
+
 if [ "$1" = "linux" ]; then 
 	if [ ! -d build/linux64 ]; then
 		cmake -H. -Bbuild/linux64 -DCMAKE_BUILD_TYPE=Debug
 	else 
 		rm -r build/linux64 && cmake -H. -Bbuild/linux64 -DCMAKE_BUILD_TYPE=Debug
 	fi
-
+pushd build/linux64 && make && popd 
 else 
 
 	if [ -d build/win64 ]; then
@@ -19,5 +21,5 @@ else
 	else 
 		cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/x86_64-w64-mingw32.cmake
 	fi
-
+pushd build/win64 && make && popd 
 fi
