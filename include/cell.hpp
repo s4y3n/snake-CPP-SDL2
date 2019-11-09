@@ -26,7 +26,9 @@ class Cell {
 		int getW();
 		void setH(int H);
 		int getH();
+		void Draw(SDL_Renderer* rend);
 	private :
+		int x, y, w , h;
 		SDL_Rect rect;
 		SDL_Color color;	
 };

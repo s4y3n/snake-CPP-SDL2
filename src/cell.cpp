@@ -1,6 +1,6 @@
 #include "cell.hpp"
 
-Cell::Cell(int W, int H, int X, int Y)
+Cell::Cell(int W, int H, int X, int Y) : x(X), y(Y), w(W), h(H)
 {
 	rect.w = W;
 	rect.h = H;
@@ -10,6 +10,10 @@ Cell::Cell(int W, int H, int X, int Y)
 
 Cell::Cell(const Cell &c)
 {
+	x = c.rect.x;
+	y = c.rect.y;
+	w = c.rect.w;
+	h = c.rect.h;
 	rect.w = c.rect.w;
 	rect.h = c.rect.h;
 	rect.x = c.rect.x;
@@ -108,6 +112,12 @@ int Cell::getH()
 
 SDL_Rect* Cell::getRect()
 {
+	//Temporary 
+	//rect.x = getX();
+//	rect.y = getY();
+	//rect.w = getW();
+	//rect.h = getH();
+	
 	return &rect;
 }
 
@@ -149,4 +159,17 @@ int Cell::getColor(int e)
 			break;
 	}
 	return 0;
+}
+
+
+
+void Cell::Draw(SDL_Renderer* rend)
+{
+/*
+	rect.x = getX();
+	rect.y = getY();
+	rect.w = getW();
+	rect.h = getH();*/
+	SDL_SetRenderDrawColor(rend, color.r,color.g,color.b, color.a);
+	SDL_RenderFillRect(rend, &rect);	
 }

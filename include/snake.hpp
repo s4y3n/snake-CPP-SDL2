@@ -39,6 +39,9 @@ class Snake {
 		void getStatus();
 		int targetOutOfBody();
 		int contact();
+		int testPosition(int x,int y);
+		void DrawHead(SDL_Renderer* rend);
+		void DrawBody(SDL_Renderer* rend);
 	private :
 		Head head;
 		vector<Body> body;
@@ -46,6 +49,8 @@ class Snake {
 		int bodyLength;
 		int limitX;
 		int limitY;
+		SDL_Color bodyColor;
+		SDL_Color bodyColor2;
 };
 
 #endif //SNAKE_H

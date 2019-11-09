@@ -51,7 +51,7 @@ class Game{
 		SDL_Rect ScoreTextPosition ;
 
 		Snake snake;
-		SDL_Color bodyColor ;
+//		SDL_Color bodyColor ;
 		SDL_Color targetColor;
 		// SCORE :
 		int score;

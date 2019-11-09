@@ -37,3 +37,23 @@ void Cible::setNewPosition(int X, int Y)
 	setX(x);
 	setY(y);
 }
+
+/*void Cible::setNewPos(Snake s)
+{
+	int found = 0;
+	int x, y;
+	while(!found)
+	{
+		x = rand()%Xmax;
+		if( x%getW() != 0 )
+			x = x - x%getW();
+		y = rand()%Ymax;
+		if( y%getH() != 0 )
+			y = y - y%getH();
+		if(!s.testPosition(x,y))
+			found = 1;
+	}	
+	setX(x);
+	setY(y);
+}
+*/

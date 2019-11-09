@@ -6,6 +6,14 @@ Snake::Snake(int W, int H, int X, int Y) : head(W,H,X,Y)
 	bodyLength = 0;
 	limitX = 0;
 	limitY = 0;	
+	bodyColor.r = 0;
+	bodyColor.g = 0;
+	bodyColor.b = 255;
+	bodyColor.a = 0;
+	bodyColor2.r = 255;
+	bodyColor2.g = 255;
+	bodyColor2.b = 255;
+	bodyColor2.a = 0;
 }
 
 Snake::~Snake()
@@ -33,7 +41,7 @@ void Snake::createBody(int i)
 
 void Snake::createBodyElement()
 {
-	cout << "Adding new element" << endl;
+//	cout << "Adding new element" << endl;
 	Body tmpBody(targets.at(0).getW(), targets.at(0).getH(), targets.at(0).getX(), targets.at(0).getY()); 
 	body.push_back(tmpBody);
 	targets.erase(targets.begin());
@@ -205,7 +213,7 @@ int Snake::targetReached(Cible c)
 void Snake::addTarget(Cible c)
 {
 	targets.push_back(c);
-	cout << "Target acquired : " << targets.size() << endl;
+//	cout << "Target acquired : " << targets.size() << endl;
 }
  
 int Snake::getBodyCount()
@@ -220,6 +228,8 @@ SDL_Rect* Snake::getBodyAt(int pos)
 
 void Snake::getStatus()
 {
+/*
+#ifdef DEBUG
 	cout << "Head : " << endl;
 	cout << "HX = " << head.getX() << endl;
 	cout << "HY = " << head.getY() << endl;
@@ -231,14 +241,20 @@ void Snake::getStatus()
 		cout << "Y = " << body.at(i).getY() << endl; 
 	}
 	cout << "targets count : " << targets.size() << endl;
+#endif
+*/
 }
 
 int Snake::contact()
 {
-		Cell nextCell(head.getnextCell());
+/*
+#ifdef DEBUG
 		cout << "Next cell " << endl;
 		cout <<"X = " << nextCell.getX() << endl;
 		cout <<"Y = " << nextCell.getY() << endl;
+#endif
+*/
+		Cell nextCell(head.getnextCell());
 	if(head.getY() == 0 && head.getDirection() == UP)
 	{
 		return 1;
@@ -262,3 +278,44 @@ int Snake::contact()
 	return 0;
 }
  
+
+int Snake::testPosition(int x, int y)
+{
+	int found = 0;
+	if(head.getX() == x && head.getY() == y)
+	{
+		found = 1;
+	}
+	else if(body.size() != 0 )
+	{
+		for(int i = 0; i < body.size() ; i++ )
+		{
+			if(body.at(i).getX() == x && body.at(i).getY() == y)
+			{
+				found = 1;
+				break;
+			}
+		}
+	}
+	return found;
+}
+
+
+void Snake::DrawHead(SDL_Renderer* rend)
+{
+	SDL_RenderClear(rend);
+	SDL_SetRenderDrawColor(rend, getHeadColor(1),getHeadColor(2),getHeadColor(3), getHeadColor(4));
+	SDL_RenderFillRect(rend, getHeadRect());	
+}
+
+void Snake::DrawBody(SDL_Renderer* rend)
+{
+
+	for(int i = 0 ; i < getBodyCount() ; i++)
+	{
+		SDL_SetRenderDrawColor(rend, bodyColor2.r,bodyColor2.g, bodyColor2.b, bodyColor2.a);
+		SDL_RenderDrawRect(rend, getBodyAt(i));
+		SDL_SetRenderDrawColor(rend, bodyColor.r,bodyColor.g, bodyColor.b, bodyColor.a);
+		SDL_RenderFillRect(rend, getBodyAt(i));
+	}
+}

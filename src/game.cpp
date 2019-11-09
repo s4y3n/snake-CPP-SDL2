@@ -47,10 +47,6 @@ Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2)
 	ScoreTextPosition.h = 80;
 	
 	// COLORS ! 
-	bodyColor.r = 0;
-	bodyColor.g = 0;
-	bodyColor.b = 255;
-	bodyColor.a = 0;
 	targetColor.r = 0;
 	targetColor.g = 255;
 	targetColor.b = 0;
@@ -80,7 +76,6 @@ void Game::Quit()
 	if(ScoreText != NULL)
 		SDL_FreeSurface(ScoreText);
 	SDL_Quit();
-//	cout << "Here" << endl;
 }
 
 int Game::Init()
@@ -112,7 +107,7 @@ int Game::Init()
 		cout << "Error enable to init TTF : " << TTF_GetError() << endl;
 		return 1;
 	}
-	Font = TTF_OpenFont("BebasNeue-Regular.ttf", 16);
+	Font = TTF_OpenFont("BebasNeue-Regular.ttf", 15);
 	if(Font == NULL)
 	{
 		cout << "Enable to OpenFont : " << TTF_GetError() << endl;
@@ -142,24 +137,16 @@ int Game::Init()
 
 void Game::DrawHead()
 {
-	SDL_RenderClear(rend);
-	SDL_SetRenderDrawColor(rend, snake.getHeadColor(1),snake.getHeadColor(2), snake.getHeadColor(3), snake.getHeadColor(4));
-	SDL_RenderFillRect(rend, snake.getHeadRect());	
+	snake.DrawHead(rend);
 }
 
 void Game::DrawBody()
 {
-	for(int i = 0 ; i < snake.getBodyCount() ; i++)
-	{
-		//SDL_SetRenderDrawColor(rend, snake.getBodyColor(1),snake.getBodyColor(2), snake.getBodyColor(3), snake.getBodyColor(4));
-		SDL_SetRenderDrawColor(rend, bodyColor.r,bodyColor.g, bodyColor.b, bodyColor.a);
-		SDL_RenderFillRect(rend, snake.getBodyAt(i));
-	}
+	snake.DrawBody(rend);
 }
 
 void Game::DrawTarget(Cible cible)
 {
-	//SDL_SetRenderDrawColor(rend, cible.getColor(1),cible.getColor(2), cible.getColor(3), cible.getColor(4));
 	SDL_SetRenderDrawColor(rend, targetColor.r,targetColor.g, targetColor.b, targetColor.a);
 	SDL_RenderFillRect(rend, cible.getRect());	
 }
@@ -175,6 +162,7 @@ void Game::Launch()
 	my_timerID = SDL_AddTimer(delay, my_callbackfunc,0);
 	int close = 0;
 	int pause = 0;
+	int pauseSet = 0;
 	int lost = 0;
 	int action = 0;	
 	while(!close)
@@ -253,7 +241,11 @@ void Game::Launch()
 			if(snake.targetReached(cible))
 			{
 				score++;
-				cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
+				do{
+						cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
+						//cible.setNewPos(snake);	
+				}while(snake.testPosition(cible.getX(), cible.getY()));
+				cout << "Cible position : " << cible.getX() << "," << cible.getY() << endl;
 			}
 			DrawTarget(cible);
 		// Drow body
