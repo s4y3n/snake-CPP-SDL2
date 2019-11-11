@@ -41,7 +41,6 @@ void Snake::createBody(int i)
 
 void Snake::createBodyElement()
 {
-//	cout << "Adding new element" << endl;
 	Body tmpBody(targets.at(0).getW(), targets.at(0).getH(), targets.at(0).getX(), targets.at(0).getY()); 
 	body.push_back(tmpBody);
 	targets.erase(targets.begin());
@@ -63,6 +62,15 @@ int Snake::targetOutOfBody()
 	{
 		for(int i = 0; i < body.size() ; i++)
 		{
+			body.at(i).setOnAtarget(0);
+			for(int j = 0; j < targets.size(); j++)
+			{
+				if(body.at(i).getX() == targets.at(j).getX() && body.at(i).getY() == targets.at(j).getY())
+					{
+						body.at(i).setOnAtarget(1);
+						break;
+					}
+			}
 			if(body.at(i).getX() == targets.at(0).getX() && body.at(i).getY() == targets.at(0).getY())
 			{
 				outOfBody = 0;
@@ -213,7 +221,6 @@ int Snake::targetReached(Cible c)
 void Snake::addTarget(Cible c)
 {
 	targets.push_back(c);
-//	cout << "Target acquired : " << targets.size() << endl;
 }
  
 int Snake::getBodyCount()
@@ -254,7 +261,7 @@ int Snake::contact()
 		cout <<"Y = " << nextCell.getY() << endl;
 #endif
 */
-		Cell nextCell(head.getnextCell());
+		Cell_SDL nextCell(head.getnextCell());
 	if(head.getY() == 0 && head.getDirection() == UP)
 	{
 		return 1;
@@ -303,9 +310,7 @@ int Snake::testPosition(int x, int y)
 
 void Snake::DrawHead(SDL_Renderer* rend)
 {
-	SDL_RenderClear(rend);
-	SDL_SetRenderDrawColor(rend, getHeadColor(1),getHeadColor(2),getHeadColor(3), getHeadColor(4));
-	SDL_RenderFillRect(rend, getHeadRect());	
+	head.Draw(rend);
 }
 
 void Snake::DrawBody(SDL_Renderer* rend)
@@ -313,9 +318,6 @@ void Snake::DrawBody(SDL_Renderer* rend)
 
 	for(int i = 0 ; i < getBodyCount() ; i++)
 	{
-		SDL_SetRenderDrawColor(rend, bodyColor2.r,bodyColor2.g, bodyColor2.b, bodyColor2.a);
-		SDL_RenderDrawRect(rend, getBodyAt(i));
-		SDL_SetRenderDrawColor(rend, bodyColor.r,bodyColor.g, bodyColor.b, bodyColor.a);
-		SDL_RenderFillRect(rend, getBodyAt(i));
+		body[i].Draw(rend);
 	}
 }

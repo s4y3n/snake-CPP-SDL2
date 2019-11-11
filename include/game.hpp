@@ -6,54 +6,54 @@
 #include <sstream> 
 #include <string>
 #include "functions.hpp"
-#include "cell.hpp"
+#include "cell_SDL.hpp"
 #include "head.hpp"
 #include "snake.hpp"
 #include "cible.hpp"
-
-#define SIZEX 400
-#define SIZEY 400
-#define RECW SIZEX/20
-#define RECH SIZEY/20
-
+#include "text.hpp"
+#ifndef GAME_H
+#define GAME_H
 class Game{
 	public :
 		Game();
 		~Game();
 		int Init();
-		void Launch();
-		void DrawHead();
-		void DrawBody();
-		void DrawTarget(Cible cible);
-		void Pause();
+		int Launch(SDL_Renderer* rend);
+		void DrawHead(SDL_Renderer* rend);
+		void DrawBody(SDL_Renderer* rend);
+		void DrawTarget(SDL_Renderer* rend);
+		void Pause(SDL_Renderer* rend);
 		void Quit();
-		void Lost();
+		void Lost(SDL_Renderer* rend);
 	private :
-		SDL_Window* win;
-		SDL_Renderer* rend;
 		SDL_TimerID my_timerID;
 		int delay ;
 		// Pause Display 
 		TTF_Font* Font;
-		SDL_Surface *PauseText ;
-		SDL_Color PauseTextColor;
-		SDL_Texture* PauseTextMessage;
-		SDL_Rect PauseTextPosition ;
+
+		Text pauseText;
+//		SDL_Surface *PauseText ;
+//		SDL_Color PauseTextColor;
+//		SDL_Texture* PauseTextMessage;
+//		SDL_Rect PauseTextPosition ;
 		// Lost Display 
-		SDL_Surface *LostText ;
-		SDL_Color LostTextColor;
-		SDL_Texture* LostTextMessage;
-		SDL_Rect LostTextPosition ;
+		Text lostText;
+//		SDL_Surface *LostText ;
+//		SDL_Color LostTextColor;
+//		SDL_Texture* LostTextMessage;
+//		SDL_Rect LostTextPosition ;
 		// Score Display 
+		Text scoreText;
 		SDL_Surface *ScoreText ;
 		SDL_Color ScoreTextColor;
 		SDL_Texture* ScoreTextMessage;
 		SDL_Rect ScoreTextPosition ;
 
 		Snake snake;
-//		SDL_Color bodyColor ;
+		Cible cible;
 		SDL_Color targetColor;
 		// SCORE :
 		int score;
-//		stringstream scoreStr;
 };
+
+#endif

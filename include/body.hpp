@@ -1,9 +1,10 @@
-#include "cell.hpp"
+//#include "cell.hpp"
 
 #ifndef BODY_H
 #define BODY_H
 
-class Body : public Cell{
+#include "cell_SDL.hpp"
+class Body : public  Cell_SDL{
 	public :
 		Body(int W, int H, int X, int Y);
 		~Body();
@@ -11,9 +12,12 @@ class Body : public Cell{
 		void moveDown();
 		void moveRight();
 		void moveLeft();
-		int inCell(Cell c);
+		int inCell(Cell_SDL c);
+		void Draw(SDL_Renderer* rend);
+		void setOnAtarget(int a);
 	private : 
-		int DIRECTION ; 
+		int DIRECTION ;
+		int onATarget; 
 };
 
 #endif

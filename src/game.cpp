@@ -5,55 +5,27 @@ Uint32 my_callbackfunc(Uint32 interval, void *param)
 {
 	SDL_Event event;
 	SDL_UserEvent userevent;
-	
 	userevent.type = SDL_USEREVENT;
 	userevent.code = 0;
 	userevent.data1 = NULL;
 	userevent.data2 = NULL;
-
 	event.type = SDL_USEREVENT;
 	event.user = userevent;
 	SDL_PushEvent(&event);
 	return(interval);
 }
 
-Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2)
+Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2),
+	cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY),
+	pauseText("Pause", 50, SIZEY/2 - 40, SIZEX- 100, 80),
+	lostText("You Lost !", 50, SIZEY/4, SIZEX - 100, 80),
+	scoreText ("0", SIZEX/3, SIZEY/2, SIZEX/4, 80)
 {
-	win = NULL;
-	rend = NULL; 
 	delay = 500;
 	////// Message init 
 	Font = NULL;
-	// Pause display
-	PauseText = NULL;
-	PauseTextColor = {0,255,0};
-	PauseTextPosition.x = 50;
-	PauseTextPosition.y = SIZEY/2 - 40;
-	PauseTextPosition.w = SIZEX - 100;
-	PauseTextPosition.h = 80;
-	// Lost Display
-	LostText = NULL;
-	LostTextColor = {0,255,0};
-	LostTextPosition.x = 50;
-	LostTextPosition.y = SIZEY/4;
-	LostTextPosition.w = SIZEX - 100;
-	LostTextPosition.h = 80;
-	//Score Display
-	ScoreText = NULL;
-	ScoreTextColor = {0,255,0};
-	ScoreTextPosition.x = 50;
-	ScoreTextPosition.y = SIZEY/2;
-	ScoreTextPosition.w = SIZEX-100;
-	ScoreTextPosition.h = 80;
-	
-	// COLORS ! 
-	targetColor.r = 0;
-	targetColor.g = 255;
-	targetColor.b = 0;
-	targetColor.a = 0;
 	// Score :
 	score = 0;
-//	scoreStr = NULL;
 }
 
 Game::~Game()
@@ -64,98 +36,47 @@ Game::~Game()
 void Game::Quit()
 {	
 	SDL_RemoveTimer(my_timerID);
-	SDL_DestroyRenderer(rend);
-	SDL_DestroyWindow(win);
 	if(Font != NULL)
 		TTF_CloseFont(Font);
-	TTF_Quit();
-	if(PauseText != NULL)
-		SDL_FreeSurface(PauseText);
-	if(LostText != NULL)
-		SDL_FreeSurface(LostText);
-	if(ScoreText != NULL)
-		SDL_FreeSurface(ScoreText);
-	SDL_Quit();
+	pauseText.Free();
+	lostText.Free();
+	scoreText.Free();
 }
 
 int Game::Init()
 {
-
-	Uint32 render_flags = SDL_RENDERER_ACCELERATED ;
-	if(SDL_Init(SDL_INIT_EVERYTHING) != 0 )
-	{
-		cout << "Error initializing SDL " << SDL_GetError() << endl;
-		return 1;
-	}
-	win = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SIZEX, SIZEY, 0);
-	if(win == NULL)
-	{
-		cout << "Error creating window : " << SDL_GetError() << endl;
-		return 1;
-	}
-	
-	rend = SDL_CreateRenderer(win, -1, render_flags);
-	if(rend == NULL)
-	{
-		cout << "Error creating renderer :" << SDL_GetError() << endl;
-		return 1;
-	}
-
-
-	if(TTF_Init() == -1)
-	{
-		cout << "Error enable to init TTF : " << TTF_GetError() << endl;
-		return 1;
-	}
 	Font = TTF_OpenFont("BebasNeue-Regular.ttf", 15);
 	if(Font == NULL)
 	{
 		cout << "Enable to OpenFont : " << TTF_GetError() << endl;
 		return 1;
 	}
-	PauseText = TTF_RenderText_Solid(Font, "Pause", PauseTextColor);
-	if(PauseText == NULL)
-	{
-		cout << "Enable to Open text" << endl;
-
-	}
-
-	LostText = TTF_RenderText_Solid(Font, "Lost !", LostTextColor);
-	if(LostText == NULL)
-	{
-		cout << "Enable to Open text" << endl;
-
-	}
-
-	
-	
-	SDL_RenderSetLogicalSize(rend,SIZEX,SIZEY);	
+	pauseText.Init(Font); 
+	lostText.Init(Font);
+	scoreText.Init(Font);
 	snake.setLimits(SIZEX,SIZEY);
 	return 0;
-
 }
 
-void Game::DrawHead()
+void Game::DrawHead(SDL_Renderer* rend)
 {
 	snake.DrawHead(rend);
 }
 
-void Game::DrawBody()
+void Game::DrawBody(SDL_Renderer* rend)
 {
 	snake.DrawBody(rend);
 }
 
-void Game::DrawTarget(Cible cible)
+void Game::DrawTarget( SDL_Renderer* rend)
 {
-	SDL_SetRenderDrawColor(rend, targetColor.r,targetColor.g, targetColor.b, targetColor.a);
-	SDL_RenderFillRect(rend, cible.getRect());	
+	cible.Draw(rend);
 }
 
-void Game::Launch()
+int Game::Launch(SDL_Renderer* rend)
 {
-	DrawHead();
-	Cible cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY);
-	DrawTarget(cible);
+	DrawHead(rend);
+	DrawTarget(rend);
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
 	
@@ -165,7 +86,7 @@ void Game::Launch()
 	int pauseSet = 0;
 	int lost = 0;
 	int action = 0;	
-	while(!close)
+	while(!close && !lost)
 	{
 		SDL_Event event;
 		while(SDL_PollEvent(&event))
@@ -236,59 +157,54 @@ void Game::Launch()
 		if(!pause && !lost)
 		{
 		// Drow head
-			DrawHead();
+			DrawHead(rend);
 		// Drow target
 			if(snake.targetReached(cible))
 			{
 				score++;
 				do{
 						cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
-						//cible.setNewPos(snake);	
 				}while(snake.testPosition(cible.getX(), cible.getY()));
-				cout << "Cible position : " << cible.getX() << "," << cible.getY() << endl;
 			}
-			DrawTarget(cible);
+			DrawTarget(rend);
 		// Drow body
-			DrawBody();
+			DrawBody(rend);
 		// Draw Background 
 			SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 			SDL_RenderPresent(rend);		
 		}
 		else if(pause)
 		{
-			Pause();
+			Pause(rend);
 		}
 		else 
 		{
-			Lost();
+			Lost(rend);
+			SDL_Delay(5000);
 		}
 	}
 	Quit();
+
+	if(close)
+		return 0;
+	else //lost
+		return 1;
 }
 
-void Game::Pause()
+void Game::Pause(SDL_Renderer* rend)
 {
-	PauseTextMessage = SDL_CreateTextureFromSurface(rend,PauseText);
-	SDL_RenderCopy(rend,PauseTextMessage,NULL,&PauseTextPosition);
+	pauseText.Display(rend);
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
 }
 
-void Game::Lost()
+void Game::Lost(SDL_Renderer* rend)
 {
 	stringstream scoreStr;
 	scoreStr << score;
-	ScoreText = TTF_RenderText_Solid(Font, scoreStr.str().c_str(), LostTextColor);
-	if(ScoreText == NULL)
-	{
-		cout << "Enable to set scoreText" << endl;
-	}
-	
-	ScoreTextMessage = SDL_CreateTextureFromSurface(rend,ScoreText);
-	SDL_RenderCopy(rend,ScoreTextMessage,NULL,&ScoreTextPosition);
-
-	LostTextMessage = SDL_CreateTextureFromSurface(rend,LostText);
-	SDL_RenderCopy(rend,LostTextMessage,NULL,&LostTextPosition);
+	scoreText.setText(Font, scoreStr.str().c_str());
+	scoreText.Display(rend);
+	lostText.Display(rend);
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
 }

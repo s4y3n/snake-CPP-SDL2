@@ -1,9 +1,10 @@
 #include "body.hpp"
-
-Body::Body(int W, int H, int X, int Y):Cell(W,H,X,Y)
+using namespace std;
+Body::Body(int W, int H, int X, int Y):Cell_SDL(W,H,X,Y)
 {
 	setColor(BLUE);
 	DIRECTION = 0;
+	onATarget = 0;
 }
 
 Body::~Body()
@@ -31,7 +32,7 @@ void Body::moveLeft()
  setX(getX() - getW()); 
 }
 
-int Body::inCell(Cell c)
+int Body::inCell(Cell_SDL c)
 {
 	int result = 0;
 	if(c.getX() == getX() && c.getY() == getY())
@@ -39,3 +40,27 @@ int Body::inCell(Cell c)
 	return result;
 }
 
+void Body::setOnAtarget(int a)
+{
+	onATarget = a;
+}
+
+void Body::Draw(SDL_Renderer* rend)
+{
+	if(onATarget)
+	{
+		setRectX(getX());
+		setRectY(getY());
+		setRectW(getW());
+		setRectH(getH());
+	}
+	else
+	{
+		setRectX(getX() + 1);
+		setRectY(getY() + 1);
+		setRectW(getW() - 2);
+		setRectH(getH() - 2);
+	}
+	SDL_SetRenderDrawColor(rend, getColorR(),getColorG(),getColorB(), getColorA());
+	SDL_RenderFillRect(rend, getRect());	
+}

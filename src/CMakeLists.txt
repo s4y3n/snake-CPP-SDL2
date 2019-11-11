@@ -3,12 +3,17 @@ message("CMAKE_SYSTEM_NAME : ${CMAKE_SYSTEM_NAME}")
 add_executable(SNAKE 
 	body.cpp
 	cell.cpp
+	cell_SDL.cpp
 	cible.cpp
 	functions.cpp
 	game.cpp
 	head.cpp
+	eye.cpp
 	main.cpp
 	snake.cpp
+	welcome.cpp
+	text.cpp
+	button.cpp
 )
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
