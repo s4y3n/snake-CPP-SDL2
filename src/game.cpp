@@ -16,7 +16,7 @@ Uint32 my_callbackfunc(Uint32 interval, void *param)
 }
 
 Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2),
-	cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY),
+	cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY, BLUE),
 	pauseText("Pause", 50, SIZEY/2 - 40, SIZEX- 100, 80),
 	lostText("You Lost !", 50, SIZEY/4, SIZEX - 100, 80),
 	scoreText ("0", SIZEX/3, SIZEY/2, SIZEX/4, 80)
@@ -26,6 +26,11 @@ Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2),
 	Font = NULL;
 	// Score :
 	score = 0;
+	BackGroundColor.r = 255;
+	BackGroundColor.g = 255;
+	BackGroundColor.b = 255;
+	BackGroundColor.a = 255;
+	
 }
 
 Game::~Game()
@@ -77,7 +82,8 @@ int Game::Launch(SDL_Renderer* rend)
 {
 	DrawHead(rend);
 	DrawTarget(rend);
-	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	//SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	SDL_RenderPresent(rend);
 	
 	my_timerID = SDL_AddTimer(delay, my_callbackfunc,0);
@@ -170,7 +176,8 @@ int Game::Launch(SDL_Renderer* rend)
 		// Drow body
 			DrawBody(rend);
 		// Draw Background 
-			SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	//		SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+			SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 			SDL_RenderPresent(rend);		
 		}
 		else if(pause)
@@ -194,7 +201,8 @@ int Game::Launch(SDL_Renderer* rend)
 void Game::Pause(SDL_Renderer* rend)
 {
 	pauseText.Display(rend);
-	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	//SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	SDL_RenderPresent(rend);
 }
 
@@ -205,6 +213,7 @@ void Game::Lost(SDL_Renderer* rend)
 	scoreText.setText(Font, scoreStr.str().c_str());
 	scoreText.Display(rend);
 	lostText.Display(rend);
-	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	//SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	SDL_RenderPresent(rend);
 }

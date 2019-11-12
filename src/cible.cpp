@@ -4,10 +4,10 @@
 #include <ctime>
 
 using namespace std;
-Cible::Cible(int W, int H, int X, int Y, int XMAX, int YMAX):Cell_SDL(W,H,X,Y)
+Cible::Cible(int W, int H, int X, int Y, int XMAX, int YMAX,COLOR c):Cell_SDL(W,H,X,Y)
 {
 	srand(time(NULL));
-	setColor(GREEN);
+	setColor(c);
 	DIRECTION = 0 ; // to get rid of 
 	active = 1;
 	Xmax = XMAX;

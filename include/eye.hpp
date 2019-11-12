@@ -5,7 +5,7 @@
 
 class Eye : public Cell_SDL{
 	public :
-		Eye(int W, int H, int X, int Y);
+		Eye(int W, int H, int X, int Y, COLOR c=BLACK);
 		~Eye();
 		void Draw(SDL_Renderer* rend);
 };

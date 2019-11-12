@@ -2,9 +2,9 @@
 
 using namespace std;
 
-Eye::Eye(int W, int H, int X, int Y):Cell_SDL(W,H,X,Y)
+Eye::Eye(int W, int H, int X, int Y,COLOR c):Cell_SDL(W,H,X,Y)
 {
-	setColor(WHITE);
+	setColor(c);
 }
 
 Eye::~Eye()

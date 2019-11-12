@@ -1,8 +1,8 @@
 #include "body.hpp"
 using namespace std;
-Body::Body(int W, int H, int X, int Y):Cell_SDL(W,H,X,Y)
+Body::Body(int W, int H, int X, int Y, COLOR c):Cell_SDL(W,H,X,Y)
 {
-	setColor(BLUE);
+	setColor(c);
 	DIRECTION = 0;
 	onATarget = 0;
 }

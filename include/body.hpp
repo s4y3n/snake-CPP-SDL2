@@ -6,7 +6,7 @@
 #include "cell_SDL.hpp"
 class Body : public  Cell_SDL{
 	public :
-		Body(int W, int H, int X, int Y);
+		Body(int W, int H, int X, int Y, COLOR c=BLUE);
 		~Body();
 		void moveUp();
 		void moveDown();

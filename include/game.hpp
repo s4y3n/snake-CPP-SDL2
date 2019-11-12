@@ -32,26 +32,14 @@ class Game{
 		TTF_Font* Font;
 
 		Text pauseText;
-//		SDL_Surface *PauseText ;
-//		SDL_Color PauseTextColor;
-//		SDL_Texture* PauseTextMessage;
-//		SDL_Rect PauseTextPosition ;
 		// Lost Display 
 		Text lostText;
-//		SDL_Surface *LostText ;
-//		SDL_Color LostTextColor;
-//		SDL_Texture* LostTextMessage;
-//		SDL_Rect LostTextPosition ;
 		// Score Display 
 		Text scoreText;
-		SDL_Surface *ScoreText ;
-		SDL_Color ScoreTextColor;
-		SDL_Texture* ScoreTextMessage;
-		SDL_Rect ScoreTextPosition ;
 
 		Snake snake;
 		Cible cible;
-		SDL_Color targetColor;
+		Color BackGroundColor;
 		// SCORE :
 		int score;
 };
