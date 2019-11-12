@@ -4,6 +4,7 @@ A simple Snake game developped with C++ using the SDL2 library.
 
 ## Configuration 
 
+After pulling the repo, cd to the directory. 
 Run getSDL2 script to get SDL2 and SDL_ttf Libraries. 
 
 ```
