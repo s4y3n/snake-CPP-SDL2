@@ -1,4 +1,7 @@
 #include "text.hpp"
+#include <iostream>
+
+using namespace std;
 
 Text::Text(string t, int X, int Y, int W, int H)
 {
@@ -9,6 +12,18 @@ Text::Text(string t, int X, int Y, int W, int H)
 	textPosition.y = Y;
 	textPosition.w = W;
 	textPosition.h = H;
+}
+
+
+Text::Text(const Text &t)
+{
+	textStr = t.textStr;
+	text = t.text;
+	textColor = t.textColor;
+	textPosition.x = t.textPosition.x;
+	textPosition.y = t.textPosition.y;
+	textPosition.w = t.textPosition.w;
+	textPosition.h = t.textPosition.h;
 }
 
 
@@ -43,18 +58,41 @@ void Text::Display(SDL_Renderer* rend)
 	SDL_RenderCopy(rend,textMessage,NULL,&textPosition);
 }
 
+void Text::setX(int X)
+{
+	textPosition.x = X;
+}
+
 int Text::getX()
 {
 	return textPosition.x;
 }
+
+void Text::setY(int Y)
+{
+	textPosition.y = Y;
+}
+
 int Text::getY()
 {
 	return textPosition.y;
 }
+
+void Text::setW(int W)
+{
+	textPosition.w = W;
+}
+
 int Text::getW()
 {
 	return textPosition.w;
 }
+
+void Text::setH(int H)
+{
+	textPosition.h = H;
+}
+
 int Text::getH()
 {
 	return textPosition.h;

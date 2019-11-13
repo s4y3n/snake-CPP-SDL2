@@ -1,7 +1,14 @@
+#include <iostream>
 #include "button.hpp"
+using namespace std;
 
 Button::Button(string t, int X, int Y, int W, int H) :
 		Text(t, X, Y, W, H)
+{
+	clicked = 0;
+}
+
+Button::Button(const Button &b) : Text(b)
 {
 	clicked = 0;
 }
@@ -24,7 +31,17 @@ void Button::Draw(SDL_Renderer* rend)
 int Button::isClicked(int x, int y)
 {
 	if(x >= getX() && x <= getX() + getW() && y >= getY() && y <= getY() + getH())
-		clicked = 1;
+		return 1;
 
-	return clicked;
+	return 0;
+}
+
+void Button::show()
+{
+	cout << "************" << endl;
+	cout << "X = " << getX() << endl ;
+	cout << "Y = " << getY() << endl ;
+	cout << "W = " << getW() << endl ;
+	cout << "H = " << getH() << endl ;
+
 }

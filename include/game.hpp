@@ -11,15 +11,21 @@
 #include "snake.hpp"
 #include "cible.hpp"
 #include "text.hpp"
+#include "score.hpp"
+
 #ifndef GAME_H
 #define GAME_H
+
 class Game{
 	public :
-		Game();
+		Game(int l);
 		~Game();
+		void setLevel();
 		int Init();
+		void setBackGroundColor(COLOR c=BLACK);
 		int Launch(SDL_Renderer* rend);
 		void DrawHead(SDL_Renderer* rend);
+	
 		void DrawBody(SDL_Renderer* rend);
 		void DrawTarget(SDL_Renderer* rend);
 		void Pause(SDL_Renderer* rend);
@@ -41,7 +47,8 @@ class Game{
 		Cible cible;
 		Color BackGroundColor;
 		// SCORE :
-		int score;
+		int level;
+		Score score;
 };
 
 #endif

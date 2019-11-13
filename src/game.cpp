@@ -15,28 +15,45 @@ Uint32 my_callbackfunc(Uint32 interval, void *param)
 	return(interval);
 }
 
-Game::Game() : snake(RECW,RECH,SIZEX/2,SIZEY/2),
-	cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY, BLUE),
+Game::Game(int l) : snake(RECW,RECH,SIZEX/2,SIZEY/2),
+	cible(RECW,RECH,SIZEX/2, SIZEY/2,SIZEX, SIZEY, GREEN),
 	pauseText("Pause", 50, SIZEY/2 - 40, SIZEX- 100, 80),
 	lostText("You Lost !", 50, SIZEY/4, SIZEX - 100, 80),
-	scoreText ("0", SIZEX/3, SIZEY/2, SIZEX/4, 80)
+	scoreText ("0", SIZEX/3, SIZEY/2, SIZEX/4, 80),
+	score(l)
 {
-	delay = 500;
+	level = l;
+	setLevel();
 	////// Message init 
 	Font = NULL;
-	// Score :
-	score = 0;
-	BackGroundColor.r = 255;
-	BackGroundColor.g = 255;
-	BackGroundColor.b = 255;
-	BackGroundColor.a = 255;
-	
+	setBackGroundColor();	
 }
+
+
 
 Game::~Game()
 {
 
 }
+
+void Game::setLevel()
+{
+	switch(level)
+	{
+		case 1:
+			delay = 1000;
+			break;
+		case 2:
+			delay = 500;
+			break;
+		case 3:
+			delay = 250;
+			break;
+		default :
+			delay = 1000;
+	}
+}
+
 
 void Game::Quit()
 {	
@@ -61,6 +78,54 @@ int Game::Init()
 	scoreText.Init(Font);
 	snake.setLimits(SIZEX,SIZEY);
 	return 0;
+}
+
+void Game::setBackGroundColor(COLOR c)
+{
+	if(c == WHITE)
+	{
+		BackGroundColor.r = 255;
+		BackGroundColor.g = 255;
+		BackGroundColor.b = 255;
+		BackGroundColor.a = 0;
+	}
+	else if(c == BLACK)
+	{
+		BackGroundColor.r = 0;
+		BackGroundColor.g = 0;
+		BackGroundColor.b = 0;
+		BackGroundColor.a = 0;
+	}
+	else if(c == GREEN)
+	{
+		BackGroundColor.r = 0;
+		BackGroundColor.g = 255;
+		BackGroundColor.b = 0;
+		BackGroundColor.a = 0;
+	}
+	else if(c == BLUE)
+	{
+		BackGroundColor.r = 0;
+		BackGroundColor.g = 0;
+		BackGroundColor.b = 255;
+		BackGroundColor.a = 0;
+	}
+	else if(c == RED)
+	{
+		BackGroundColor.r = 255;
+		BackGroundColor.g = 0;
+		BackGroundColor.b = 0;
+		BackGroundColor.a = 0;
+	}
+	else // DEfault RED
+	{
+		BackGroundColor.r = 255;
+		BackGroundColor.g = 0;
+		BackGroundColor.b = 0;
+		BackGroundColor.a = 0;
+	}
+
+
 }
 
 void Game::DrawHead(SDL_Renderer* rend)
@@ -167,7 +232,7 @@ int Game::Launch(SDL_Renderer* rend)
 		// Drow target
 			if(snake.targetReached(cible))
 			{
-				score++;
+				score.increment();
 				do{
 						cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
 				}while(snake.testPosition(cible.getX(), cible.getY()));
@@ -209,7 +274,7 @@ void Game::Pause(SDL_Renderer* rend)
 void Game::Lost(SDL_Renderer* rend)
 {
 	stringstream scoreStr;
-	scoreStr << score;
+	scoreStr << score.getActual();
 	scoreText.setText(Font, scoreStr.str().c_str());
 	scoreText.Display(rend);
 	lostText.Display(rend);
