@@ -55,7 +55,15 @@ void Text::setText(TTF_Font* Font, string s)
 void Text::Display(SDL_Renderer* rend)
 {
 	textMessage = SDL_CreateTextureFromSurface(rend,text);
-	SDL_RenderCopy(rend,textMessage,NULL,&textPosition);
+	SDL_Rect tmpRect;
+	int margeW = getW()/(textStr.size() + 2);
+	int margeH = getH()/8;
+	tmpRect.x = getX() + margeW;
+	tmpRect.w = margeW*textStr.size();
+	tmpRect.y = getY() + +margeH;
+	tmpRect.h = getH() - 2*margeH;
+	SDL_RenderCopy(rend,textMessage,NULL,&tmpRect);
+	//SDL_RenderCopy(rend,textMessage,NULL,&textPosition);
 }
 
 void Text::setX(int X)

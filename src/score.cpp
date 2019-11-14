@@ -39,7 +39,16 @@ void Score::chargeBest()
 	}
 	else
 	{
-		cout << "Enable to open file " << endl;
+		cout << "Enable to open file : charge best score" << endl;
+		ofstream scoreFile2;
+		scoreFile2.open("score.txt");
+		for(int i = 0 ; i < 3; i++)
+		{
+			scoreFile2 << "score" << i << "=0" << endl;
+
+		}
+		scoreFile2.close();
+	//	cout << "Enable to open file " << endl;
 		best = 0;
 	} 	
 
@@ -90,7 +99,24 @@ void Score::saveScore()
 	}
 	else
 	{
-		cout << "Enable to open file " << endl;
+		cout << "Enable to open file : new best score " << endl;
+		ofstream scoreFile2;
+		scoreFile2.open("score.txt");
+		for(int i = 0 ; i < 3; i++)
+		{
+			if(level != i + 1)
+			{
+				scoreFile2 << "score" << i << "=0" << endl;
+			}
+			else
+			{
+				line = "score" + to_string(level) + "=" + to_string(actual);
+				scoreFile2 << line << endl;
+			}
+
+		}
+		scoreFile2.close();
+		//cout << "Enable to open file " << endl;
 		best = actual;
 	} 
 }	

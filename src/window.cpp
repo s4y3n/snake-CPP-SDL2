@@ -13,9 +13,8 @@ Window::Window(int X, int Y, COLOR c)
 
 Window::~Window()
 {
-
-
-
+	elements.clear();
+	vector<Button>(elements).swap(elements);
 }
 
 void Window::setColor(COLOR c)
@@ -62,29 +61,36 @@ void Window::setColor(COLOR c)
 		color.b = 0;
 		color.a = 0;
 	}
-
-
 }
 
 void Window::addButton(Button &b)
 {
 	nbrelements++;
-	cout << "Adding element : " << nbrelements << endl;
-	int newH = sizeY/nbrelements;
-	cout << "newH = " << newH << endl;
+	int marge = 25;
+	int newH = (sizeY - 2*marge)/(2*nbrelements - 1);
 	int i = 0;
 	for(i = 0; i < elements.size() ; i++)
 	{
-		cout << "Setting : " << i << endl;
 		elements[i].setH(newH);
-		elements[i].setY(i*newH);
-		cout << elements[i].getH() << endl;
-		cout << elements[i].getY() << endl;
+		if(i == 0)
+		{
+			elements[i].setY(marge);
+		}
+		else
+		{
+			elements[i].setY(elements[i - 1].getY() + 2*newH);
+		}
 	}
 	b.setH(newH);
-	b.setY(i*newH);
+	if(i == 0)
+	{
+			b.setY(marge);
+	}
+	else
+	{
+		b.setY(elements[i-1].getY() + 2 *newH);
+	}
 	elements.emplace_back(b);
-	//DisplayStatus();
 }
 
 
@@ -111,7 +117,6 @@ void Window::Display(SDL_Renderer* rend)
 	for(int i = 0; i < elements.size() ; i++)
 	{
 		elements[i].Draw(rend);
-//		SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	}
 	SDL_SetRenderDrawColor(rend, color.r, color.g, color.b, color.a);
 	SDL_RenderPresent(rend);
@@ -129,7 +134,6 @@ void Window::DisplayStatus()
 
 	}
 }
-
 
 int Window::returnClickedElement(int X, int Y)
 {

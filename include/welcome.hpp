@@ -6,7 +6,6 @@
 #include <sstream> 
 #include <string>
 #include "functions.hpp"
-#include "game.hpp"
 #include "window.hpp"
 #include "button.hpp"
 #ifndef WELCOME_H
@@ -26,7 +25,8 @@ class Welcome{
 		SDL_Renderer* rend;
 		// Pause Display 
 		TTF_Font* Font;
-		Window window;
+		Window choiceWindow;
+	//	Window 
 		Button level1B;
 		Button level2B;
 		Button level3B;

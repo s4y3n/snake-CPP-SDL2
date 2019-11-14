@@ -15,6 +15,8 @@ add_executable(SNAKE
 	text.cpp
 	button.cpp
 	score.cpp
+	window.cpp
+	button.cpp
 )
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")

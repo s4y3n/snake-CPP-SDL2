@@ -13,8 +13,9 @@ class Button : public Text {
 		int isClicked(int x, int y);
 		void Draw(SDL_Renderer* rend);
 		void show();
+		void setUnclickable();
 	private :
-		int clicked ;
+		int clickable ;
 };
 
 #endif
