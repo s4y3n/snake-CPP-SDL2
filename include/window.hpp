@@ -22,6 +22,7 @@ class Window
 	private :
 		int sizex;
 		int sizeY;
+		int max;
 		int nbrelements; 
 		vector<Button> elements;	
 		Color color;

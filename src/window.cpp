@@ -8,6 +8,7 @@ Window::Window(int X, int Y, COLOR c)
 	sizex = X;
 	sizeY = Y;
 	nbrelements = 0;
+	max = 0;
 	setColor(c);
 }
 
@@ -82,6 +83,8 @@ void Window::addButton(Button &b)
 		}
 	}
 	b.setH(newH);
+	if(max < b.getTexteSize())
+		max = b.getTexteSize();
 	if(i == 0)
 	{
 			b.setY(marge);
@@ -116,7 +119,7 @@ void Window::Display(SDL_Renderer* rend)
 {
 	for(int i = 0; i < elements.size() ; i++)
 	{
-		elements[i].Draw(rend);
+		elements[i].Draw(rend,max);
 	}
 	SDL_SetRenderDrawColor(rend, color.r, color.g, color.b, color.a);
 	SDL_RenderPresent(rend);

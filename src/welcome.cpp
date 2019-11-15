@@ -1,6 +1,7 @@
 #include "welcome.hpp"
 #include "newGame.hpp"
 #include "configure.hpp"
+#include "bestscores.hpp"
 
 using namespace std;
 
@@ -110,28 +111,36 @@ void Welcome::Launch()
 			}
 		}
 		SDL_RenderClear(rend);
-		if(choice != 0) //switch case here
+		switch(choice)
 		{
-			if(choice == 1)
-			{		
+				case 0 :
+					DisplayStart();
+					break;
+				case 1 :
+					{
+						choice = 0;
+						NewGame newGame(SIZEX,SIZEY,Font);
+						close = newGame.Launch(rend);
+					}
+					break;
+				case 2 :
+					{
+						choice = 0;
+						BestScores bestScores(SIZEX,SIZEY,Font);
+						close = bestScores.Launch(rend);
+					}
+					break;
+				case 3 :
+					{
+						choice = 0;
+						Configure configure(SIZEX, SIZEY, Font);
+						close = configure.Launch(rend);
+					}
+					break;
+				default :
 					choice = 0;
-					NewGame newGame(SIZEX,SIZEY,Font);
-					close = newGame.Launch(rend);
-			}
-			else if(choice == 3)
-			{
-				choice = 0;
-				Configure configure(SIZEX, SIZEY, Font);
-				close = configure.Launch(rend);
-			}
-			else
-			{
-				DisplayStart();
-			}
-		}
-		else 
-		{
-			DisplayStart();
+					DisplayStart();
+					break;
 		}
 	}
 	Quit();

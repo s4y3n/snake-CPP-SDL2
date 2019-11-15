@@ -8,12 +8,14 @@ class Score {
 	public :
 		Score(int l);
 		~Score();
+		void setLevel(int l);
 		void chargeBest();
 		void setBest();
 		int isBest();
 		void increment();
 		int getActual();
 		void saveScore();
+		int getBest();
 	private :
 		int best;
 		int actual;

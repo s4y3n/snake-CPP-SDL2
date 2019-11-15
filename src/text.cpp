@@ -66,6 +66,25 @@ void Text::Display(SDL_Renderer* rend)
 	//SDL_RenderCopy(rend,textMessage,NULL,&textPosition);
 }
 
+void Text::Display(SDL_Renderer* rend, int Max)
+{
+	textMessage = SDL_CreateTextureFromSurface(rend,text);
+	SDL_Rect tmpRect;
+	int margeW = getW()/(Max + 2);
+	int margeH = getH()/8;
+	tmpRect.w = margeW*textStr.size();
+	tmpRect.x = getX() + (getW()-tmpRect.w)/2;
+	tmpRect.y = getY() + +margeH;
+	tmpRect.h = getH() - 2*margeH;
+	SDL_RenderCopy(rend,textMessage,NULL,&tmpRect);
+	//SDL_RenderCopy(rend,textMessage,NULL,&textPosition);
+}
+
+int Text::getTexteSize()
+{
+	return textStr.size();
+}
+
 void Text::setX(int X)
 {
 	textPosition.x = X;

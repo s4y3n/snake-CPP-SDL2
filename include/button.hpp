@@ -11,7 +11,7 @@ class Button : public Text {
 		Button(const Button &b);
 		~Button();
 		int isClicked(int x, int y);
-		void Draw(SDL_Renderer* rend);
+		void Draw(SDL_Renderer* rend, int Max);
 		void show();
 		void setUnclickable();
 	private :

@@ -14,6 +14,7 @@ class Text{
 		void Init(TTF_Font* Font);
 		void setText(TTF_Font* Font, string s);
 		void Display(SDL_Renderer* rend);
+		void Display(SDL_Renderer* rend, int Max);
 		void setX(int X);
 		int getX();
 		void setY(int Y);
@@ -22,6 +23,7 @@ class Text{
 		int getW();
 		void setH(int H);
 		int getH();
+		int getTexteSize();
 		SDL_Rect* getRect();
 	private :
 		string textStr;

@@ -19,9 +19,9 @@ Button::~Button()
 
 }
 
-void Button::Draw(SDL_Renderer* rend)
+void Button::Draw(SDL_Renderer* rend, int Max)
 {
-	Display(rend);
+	Display(rend,Max);
 	if(clickable)
 	{
 		SDL_SetRenderDrawColor(rend, 255,255,255,255);

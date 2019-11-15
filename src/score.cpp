@@ -6,16 +6,21 @@ using namespace std;
 
 Score::Score(int l)
 {
-	actual = 0;
-	displayed = 0;
-	level = l;
-	chargeBest();
+	setLevel(l);
 }
 
 Score::~Score()
 {
 	
 
+}
+
+void Score::setLevel(int l)
+{
+	actual = 0;
+	displayed = 0;
+	level = l;
+	chargeBest();
 }
 
 void Score::chargeBest()
@@ -119,4 +124,9 @@ void Score::saveScore()
 		//cout << "Enable to open file " << endl;
 		best = actual;
 	} 
+}
+
+int Score::getBest()
+{
+	return best;
 }	
