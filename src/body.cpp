@@ -2,7 +2,14 @@
 using namespace std;
 Body::Body(int W, int H, int X, int Y, COLOR c):Cell_SDL(W,H,X,Y)
 {
-	setColor(c);
+	Configuration conf;
+	if(conf.gotConfig())
+	{
+		chargeColor(conf.getBodyColor());
+	}else
+	{
+		setColor(c);
+	}
 	DIRECTION = 0;
 	onATarget = 0;
 }

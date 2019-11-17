@@ -17,6 +17,9 @@ add_executable(SNAKE
 	score.cpp
 	window.cpp
 	button.cpp
+	configuration.cpp
+	bestscore.cpp
+	newGame.cpp
 )
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")

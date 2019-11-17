@@ -5,7 +5,14 @@ Head::Head(int W, int H, int X, int Y,COLOR c):Cell_SDL(W,H,X,Y),
 	rightE(4,4, X + 3*W/4 - 4/2, Y + H/2 - 4/2),
 	leftE(4,4, X + W/4 - 4/2, Y + H/2 - 4/2)
 {
-	setColor(c);
+	Configuration conf;
+	if(conf.gotConfig())
+	{
+		chargeColor(conf.getHeadColor());
+	}else
+	{
+		setColor(c);
+	}
 	DIRECTION = IDLE;
 }
 

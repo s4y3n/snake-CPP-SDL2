@@ -1,7 +1,7 @@
 #include "window.hpp"
 #include "functions.hpp"
 #include "button.hpp"
-
+#include "configuration.hpp"
 
 #ifndef CONFIGURE_H
 #define CONFIGURE_H
@@ -20,6 +20,7 @@ class Configure {
 		Button config3B;
 		Button config4B;
 		Button backB;
+		Configuration config;
 };
 
 #endif

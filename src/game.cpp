@@ -82,50 +82,60 @@ int Game::Init()
 
 void Game::setBackGroundColor(COLOR c)
 {
-	if(c == WHITE)
+	Configuration config;
+	if(config.gotConfig())
 	{
-		BackGroundColor.r = 255;
-		BackGroundColor.g = 255;
-		BackGroundColor.b = 255;
-		BackGroundColor.a = 0;
+		Color c = config.getBackGroundColor();
+		BackGroundColor.r = c.r;
+		BackGroundColor.g = c.g;
+		BackGroundColor.b = c.b;
+		BackGroundColor.a = c.a;
 	}
-	else if(c == BLACK)
+	else
 	{
-		BackGroundColor.r = 0;
-		BackGroundColor.g = 0;
-		BackGroundColor.b = 0;
-		BackGroundColor.a = 0;
+		if(c == WHITE)
+		{
+			BackGroundColor.r = 255;
+			BackGroundColor.g = 255;
+			BackGroundColor.b = 255;
+			BackGroundColor.a = 0;
+		}
+		else if(c == BLACK)
+		{
+			BackGroundColor.r = 0;
+			BackGroundColor.g = 0;
+			BackGroundColor.b = 0;
+			BackGroundColor.a = 0;
+		}
+		else if(c == GREEN)
+		{
+			BackGroundColor.r = 0;
+			BackGroundColor.g = 255;
+			BackGroundColor.b = 0;
+			BackGroundColor.a = 0;
+		}
+		else if(c == BLUE)
+		{
+			BackGroundColor.r = 0;
+			BackGroundColor.g = 0;
+			BackGroundColor.b = 255;
+			BackGroundColor.a = 0;
+		}
+		else if(c == RED)
+		{
+			BackGroundColor.r = 255;
+			BackGroundColor.g = 0;
+			BackGroundColor.b = 0;
+			BackGroundColor.a = 0;
+		}
+		else // DEfault RED
+		{
+			BackGroundColor.r = 255;
+			BackGroundColor.g = 0;
+			BackGroundColor.b = 0;
+			BackGroundColor.a = 0;
+		}
 	}
-	else if(c == GREEN)
-	{
-		BackGroundColor.r = 0;
-		BackGroundColor.g = 255;
-		BackGroundColor.b = 0;
-		BackGroundColor.a = 0;
-	}
-	else if(c == BLUE)
-	{
-		BackGroundColor.r = 0;
-		BackGroundColor.g = 0;
-		BackGroundColor.b = 255;
-		BackGroundColor.a = 0;
-	}
-	else if(c == RED)
-	{
-		BackGroundColor.r = 255;
-		BackGroundColor.g = 0;
-		BackGroundColor.b = 0;
-		BackGroundColor.a = 0;
-	}
-	else // DEfault RED
-	{
-		BackGroundColor.r = 255;
-		BackGroundColor.g = 0;
-		BackGroundColor.b = 0;
-		BackGroundColor.a = 0;
-	}
-
-
 }
 
 void Game::DrawHead(SDL_Renderer* rend)

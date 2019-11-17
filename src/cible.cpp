@@ -7,7 +7,14 @@ using namespace std;
 Cible::Cible(int W, int H, int X, int Y, int XMAX, int YMAX,COLOR c):Cell_SDL(W,H,X,Y)
 {
 	srand(time(NULL));
-	setColor(c);
+	Configuration conf;
+	if(conf.gotConfig())
+	{
+		chargeColor(conf.getTargetColor());
+	}else
+	{
+		setColor(c);
+	}
 	DIRECTION = 0 ; // to get rid of 
 	active = 1;
 	Xmax = XMAX;

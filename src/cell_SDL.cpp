@@ -69,6 +69,14 @@ void Cell_SDL::setColor(COLOR c)
 	}
 }
 
+void Cell_SDL::chargeColor(Color c)
+{
+	color.r = c.r;
+	color.g = c.g;
+	color.b = c.b;
+	color.a = c.a;
+}
+
 int Cell_SDL::getColorR()
 {
 	return color.r;

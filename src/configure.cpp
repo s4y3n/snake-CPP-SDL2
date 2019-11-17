@@ -1,6 +1,6 @@
 #include "configure.hpp"
 #include <iostream>
-
+#include "configuration.hpp"
 using namespace std;
 
 Configure::Configure(int x, int y,TTF_Font* Font) : mainWindow(x,y),
@@ -9,7 +9,8 @@ Configure::Configure(int x, int y,TTF_Font* Font) : mainWindow(x,y),
 	config2B("HEAD", 50, y/4 - 40, x-100, 80),
 	config3B("BODY", 50, y/4 - 40, x-100, 80),
 	config4B("TARGET", 50, y/4 - 40, x-100, 80),
-	backB("BACK", 50, y/4 - 40, x-100, 80)
+	backB("BACK", 50, y/4 - 40, x-100, 80),
+	config()
 {
 	headS.Init(Font);
 	headS.setUnclickable();

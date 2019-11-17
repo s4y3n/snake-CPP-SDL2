@@ -1,4 +1,4 @@
-//#include "cell.hpp"
+#include "configuration.hpp"
 
 #ifndef BODY_H
 #define BODY_H

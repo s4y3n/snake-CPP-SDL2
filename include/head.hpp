@@ -1,5 +1,6 @@
 #include "cell_SDL.hpp"
 #include "eye.hpp"
+#include "configuration.hpp"
 #ifndef HEAD_H
 #define HEAD_H
 

@@ -1,6 +1,6 @@
-//#include "cell.hpp"
 #include "cell_SDL.hpp"
-//#include "snake.hpp"
+#include "configuration.hpp"
+
 #ifndef CIBLE_H
 #define CIBLE_H
 

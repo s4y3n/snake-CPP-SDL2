@@ -12,6 +12,7 @@
 #include "cible.hpp"
 #include "text.hpp"
 #include "score.hpp"
+#include "configuration.hpp"
 
 #ifndef GAME_H
 #define GAME_H

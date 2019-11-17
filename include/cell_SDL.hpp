@@ -10,6 +10,7 @@ class Cell_SDL : public Cell{
 		Cell_SDL(const Cell_SDL &c);
 		~Cell_SDL();
 		void setColor(COLOR c);
+		void chargeColor(Color c); // From config file
 		int getColorR();
 		int getColorG();
 		int getColorB();
