@@ -16,11 +16,12 @@ class Cell_SDL : public Cell{
 		int getColorB();
 		int getColorA();
 		int getColor(int e);
+		Color getCOLOR(void);
 		void setRectX(int X);	
 		void setRectY(int Y);
 		void setRectW(int W);
 		void setRectH(int H);
-
+		int clicked(int x, int y);
 		SDL_Rect* getRect();
 	private :
 		SDL_Rect rect;

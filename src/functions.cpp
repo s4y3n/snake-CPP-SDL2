@@ -26,3 +26,12 @@ void left()
 	if(DEBUG)
 		cout << "LEFT" << endl;
 }
+
+int compareColors(Color c1, Color c2)
+{
+	int same = 0;
+	if(c1.r == c2.r && c1.g == c2.g && c1.b == c2.b && c1.a == c2.a)
+		same = 1;
+	return same;
+}
+

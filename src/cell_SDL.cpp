@@ -141,3 +141,20 @@ SDL_Rect* Cell_SDL::getRect()
 {
 	return &rect;
 }
+
+
+Color Cell_SDL::getCOLOR(void)
+{
+	return color;
+}
+
+int Cell_SDL::clicked(int x, int y)
+{
+	int isClicked = 0;
+	if(x >= getX() && x <= getX() + getW() && y >= getY() && y <= getY() + getH())
+		isClicked = 1;
+	return isClicked;
+
+
+}
+

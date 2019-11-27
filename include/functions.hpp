@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "common.hpp"
 #ifndef FUNCTIONS_H
 #define FUNCTION_H
 
@@ -15,5 +15,8 @@ void up();
 void down();
 void right();
 void left();
+
+int compareColors(Color c1, Color c2);
+
 #endif
 

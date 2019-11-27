@@ -33,29 +33,20 @@ void Configuration::chargeAll()
 	{
 		while(getline(configFile,line))
 		{
-			cout << "Line = " << line << endl;
 			if(line.size() > 16 && !line.compare(0,15,"backGroundColor"))
 			{
-				cout << "PArsing BGC" << endl;
-				cout << line.substr(16) << endl;
 				backGroundColor = parseColor(line.substr(16));
 			}
 			if(line.size() > 10 && !line.compare(0,9,"headColor"))
 			{
-				cout << "PArsing HC" << endl;
-				cout << line.substr(9) << endl;
 				headColor = parseColor(line.substr(10));
 			}
 			if(line.size() > 10 && !line.compare(0,9,"bodyColor"))
 			{
-				cout << "PArsing BC" << endl;
-				cout << line.substr(10) << endl;
 				bodyColor = parseColor(line.substr(10));
 			}
 			if(line.size() > 11 && !line.compare(0,11,"targetColor"))
 			{
-				cout << "PArsing TC" << endl;
-				cout << line.substr(12) << endl;
 				targetColor = parseColor(line.substr(12));
 			}
 		}
@@ -75,7 +66,7 @@ void Configuration::saveAll()
 	ofstream configFile;
 	configFile.open(configFileName.c_str());
 	configFile << "backGroundColor=" << backGroundColor.r << ":" << backGroundColor.g << ":" << backGroundColor.b << ":" << backGroundColor.a << endl; 
-	configFile << "headColor=" << ":" << headColor.r << ":" << headColor.g << ":" << headColor.b << ":" << headColor.a << endl; 
+	configFile << "headColor=" << headColor.r << ":" << headColor.g << ":" << headColor.b << ":" << headColor.a << endl; 
 	configFile << "bodyColor=" << bodyColor.r << ":" << bodyColor.g << ":" << bodyColor.b << ":" << bodyColor.a << endl; 
 	configFile << "targetColor=" << targetColor.r << ":" << targetColor.g << ":" << targetColor.b << ":" << targetColor.a << endl;
 	configFile.close(); 
@@ -88,7 +79,11 @@ void Configuration::setBackGroundColor(COLOR C)
 
 void Configuration::saveBackGroundColor(Color c)
 {
-
+	backGroundColor.r = c.r;
+	backGroundColor.g = c.g;
+	backGroundColor.b = c.b;
+	backGroundColor.a = c.a;
+	saveAll();
 }
 
 Color Configuration::getBackGroundColor()
@@ -107,6 +102,11 @@ void Configuration::setHeadColor(COLOR C)
 
 void Configuration::saveHeadColor(Color c)
 {
+	headColor.r = c.r;
+	headColor.g = c.g;
+	headColor.b = c.b;
+	headColor.a = c.a;
+	saveAll();
 
 }
 
@@ -126,7 +126,11 @@ void Configuration::setBodyColor(COLOR C)
 
 void Configuration::saveBodyColor(Color c)
 {
-
+	bodyColor.r = c.r;
+	bodyColor.g = c.g;
+	bodyColor.b = c.b;
+	bodyColor.a = c.a;
+	saveAll();
 }
 
 Color Configuration::getBodyColor()
@@ -145,7 +149,11 @@ void Configuration::setTargetColor(COLOR C)
 
 void Configuration::saveTargetColor(Color c)
 {
-
+	targetColor.r = c.r;
+	targetColor.g = c.g;
+	targetColor.b = c.b;
+	targetColor.a = c.a;
+	saveAll();
 }
 
 Color Configuration::getTargetColor()
@@ -225,11 +233,6 @@ Color Configuration::parseColor(string colorStr)
 	string colorG = colorStr.substr(found1 + 1, found2 - found1 - 1);
 	string colorB = colorStr.substr(found2 + 1, found3 - found2 - 1);
 	string colorA = colorStr.substr(found3 + 1,std::string::npos);
-	cout << "Extracted : " << endl; 
-	cout << "R = " << colorR << endl;
-	cout << "G = " << colorG << endl;
-	cout << "B = " << colorB << endl;
-	cout << "A = " << colorA << endl;
 	c.r = stoi(colorR);
 	c.g = stoi(colorG);
 	c.b = stoi(colorB);

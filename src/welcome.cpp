@@ -134,7 +134,7 @@ void Welcome::Launch()
 					{
 						choice = 0;
 						Configure configure(SIZEX, SIZEY, Font);
-						close = configure.Launch(rend);
+						close = configure.Launch(rend,Font);
 					}
 					break;
 				default :

@@ -10,9 +10,11 @@ class Configure {
 	public :
 		Configure(int x, int y, TTF_Font* Font);
 		~Configure();
-		int Launch(SDL_Renderer* rend);
+		int Launch(SDL_Renderer* rend, TTF_Font* Font);
 		void DisplayMainWindow(SDL_Renderer* rend);
 	private :
+		int W;
+		int H;
 		Window mainWindow;
 		Button headS;
 		Button config1B;

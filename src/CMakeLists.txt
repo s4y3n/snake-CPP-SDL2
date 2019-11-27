@@ -1,5 +1,7 @@
 message("CMAKE_SYSTEM_NAME : ${CMAKE_SYSTEM_NAME}")
 
+set(CMAKE_CXX_STANDARD 11)
+
 add_executable(SNAKE 
 	body.cpp
 	cell.cpp
@@ -13,13 +15,15 @@ add_executable(SNAKE
 	snake.cpp
 	welcome.cpp
 	text.cpp
-	button.cpp
 	score.cpp
 	window.cpp
 	button.cpp
 	configuration.cpp
-	bestscore.cpp
+	bestscores.cpp
 	newGame.cpp
+	configure.cpp
+	pallette.cpp
+	bgcolor.cpp
 )
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
@@ -93,4 +97,4 @@ else()
 	#target_link_libraries(SNAKE ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_TTF_LIBRARIES})
 endif()
 message("output dir : ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
-file(COPY ${CMAKE_SOURCE_DIR}/fonts/BebasNeue-Regular.ttf DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
+file(COPY ${CMAKE_SOURCE_DIR}/fonts/04B_20__.TTF DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
