@@ -1,4 +1,5 @@
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
+#include <SDL.h>
 #include <iostream>
 #include "cell.hpp" 
 #ifndef CELL_SDL_H

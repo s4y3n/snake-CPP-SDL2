@@ -1,4 +1,4 @@
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
 
 #ifndef CELL_H
 #define CELL_H
