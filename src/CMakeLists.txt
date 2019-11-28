@@ -28,56 +28,25 @@ add_executable(SNAKE
 
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 	message("COMPILE FOR WINDOWS")	
-
-	### What was working 
-#	set(SDL2_LIBRARY SDL2)
-#	set(SDL2MAIN_LIBRARY SDL2main)
-#	set(SDL2_TTF_LIBRARY SDL2_ttf)
-	###
-#	message("SDL2 ${SDL2}")
-	
-	# WORKING 
-	message("From src CMAKE CMAKE_SOURCE_DIR = " ${CMAKE_SOURCE_DIR})
-	
 	find_package(SDL2 REQUIRED)
-	message("SDL2_INCLUDE_DIRS = " ${SDL2_INCLUDE_DIRS})
-	target_include_directories(SNAKE PRIVATE ${SDL2_INCLUDE_DIRS})
-	target_link_libraries(SNAKE ${SDL2_LIBRARIES})
 	find_package(SDL2_image REQUIRED)
-	message("SDL2_IMAGE_INCLUDE_DIRS = " ${SDL2_IMAGE_INCLUDE_DIRS})
-	target_include_directories(SNAKE PRIVATE ${SDL2_IMAGE_INCLUDE_DIRS})
-	target_link_libraries(SNAKE ${SDL2_IMAGE_LIBRARIES})
 	find_package(SDL2_ttf REQUIRED)
-	message("SDL2_TTF_INCLUDE_DIRS = " ${SDL2_TTF_INCLUDE_DIRS})
-	target_include_directories(SNAKE PRIVATE ${SDL2_TTF_INCLUDE_DIRS})
-	target_link_libraries(SNAKE ${SDL2_TTF_LIBRARIES})
 else() 
 	message("COMPILE FOR LINUX")	
-#	set(SDL2_LIBRARY SDL2)
-#	set(SDL2MAIN_LIBRARY SDL2main)
-#	set(SDL2_TTF_LIBRARY SDL2_ttf)
-	
-	
 	find_package(SDL2 REQUIRED sdl2)
 	INCLUDE(FindPkgConfig)
 	pkg_check_modules(SDL2_TTF REQUIRED SDL2_ttf)
-#	target_include_directories(SNAKE PUBLIC ${SDL2_INCLUDE_DIRS} ${SDL2_TFF_INCLUDE_DIRS})
 endif()
-
-
 include_directories(${CMAKE_SOURCE_DIR}/include)
-
-
-
-
 if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 	message("Linking for FOR WINDOWS")	
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lmingw32")
-	#target_include_directories(SNAKE PRIVATE ${SDL2_INCLUDE_DIRS})
-	#target_include_directories(SNAKE PRIVATE ${SDL2_IMAGE_INCLUDE_DIRS})
-	#target_include_directories(SNAKE PRIVATE ${SDL2_TTF_INCLUDE_DIRS})
-	#target_link_libraries(SNAKE ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
-#	target_link_libraries(SNAKE ${SDL2MAIN_LIBRARY} ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARY})
+	target_include_directories(SNAKE PRIVATE ${SDL2_INCLUDE_DIRS})
+	target_link_libraries(SNAKE ${SDL2_LIBRARIES})
+	target_include_directories(SNAKE PRIVATE ${SDL2_IMAGE_INCLUDE_DIRS})
+	target_link_libraries(SNAKE ${SDL2_IMAGE_LIBRARIES})
+	target_include_directories(SNAKE PRIVATE ${SDL2_TTF_INCLUDE_DIRS})
+	target_link_libraries(SNAKE ${SDL2_TTF_LIBRARIES})
 	# WORKING FINE
 #	file(COPY ${CMAKE_SOURCE_DIR}/x86_64-w64-mingw32/bin/SDL2.dll DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
 #	file(COPY ${CMAKE_SOURCE_DIR}/x86_64-w64-mingw32/bin/SDL2_image.dll DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
@@ -85,12 +54,9 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
 #	file(COPY ${CMAKE_SOURCE_DIR}/x86_64-w64-mingw32/bin/libfreetype-6.dll DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
 else()
 	message("Linking for FOR Linux")	
-	
-#	target_include_directories(SNAKE PUBLIC ${SDL2_INCLUDE_DIRS} ${SDL2_TFF_INCLUDE_DIRS})
-#	target_link_libraries(SNAKE ${SDL2MAIN_LIBRARY} ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARY})
 	#WORKING 
 	target_include_directories(SNAKE PUBLIC ${SDL2_INCLUDE_DIRS} ${SDL2_TFF_INCLUDE_DIRS})
 	target_link_libraries(SNAKE ${SDL2_LIBRARIES} ${SDL2MAIN_LIBRARY} ${SDL2_TTF_LIBRARIES})
 endif()
-message("output dir : ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 file(COPY ${CMAKE_SOURCE_DIR}/fonts/04B_20__.TTF DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
+file(COPY ${CMAKE_SOURCE_DIR}/fonts/BebasNeue-Regular.ttf DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/)
