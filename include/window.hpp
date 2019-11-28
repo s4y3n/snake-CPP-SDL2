@@ -1,4 +1,5 @@
-#include <SDL2/SDL.h>
+//#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "common.hpp"
 #include "button.hpp"
 #include "text.hpp"
