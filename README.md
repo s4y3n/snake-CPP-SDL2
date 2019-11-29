@@ -1,6 +1,6 @@
 # snake-C++-SDL2
 
-A simple Snake game developped with C++ using the SDL2 library.
+A simple Snake game developped in C++ using the SDL2 library.
 
 ## Configuration 
 
@@ -15,22 +15,21 @@ sayen@:~/SNAKE$ ./getSDL2
 To compile for Linux(64) and Windows (32 & 64), run the bscript script after the configuration step. 
 
 ### Linux :
+
 ```bash
 sayen@:~/SNAKE$ ./bscript linux
 ```
 
-### Windows :
-
-#### Windows 32 :
+### Windows 32 & 64:
 
 For Windows 32 compile with the following command :
+
 ```bash
 sayen@:~/SNAKE$ ./bscript win32
 ```
 
-#### Windows 64 :
-
 For Windows 64 compile with the following command :
+
 ```bash
 sayen@:~/SNAKE$ ./bscript win64
 ```
