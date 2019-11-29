@@ -22,12 +22,14 @@ sayen@:~/SNAKE$ ./bscript linux
 ### Windows :
 
 #### Windows 32 :
+
 For Windows 32 compile with the following command :
 ```
 sayen@:~/SNAKE$ ./bscript win32
 ```
 
 #### Windows 64 :
+
 For Windows 64 compile with the following command :
 ```
 sayen@:~/SNAKE$ ./bscript win64
@@ -38,6 +40,7 @@ sayen@:~/SNAKE$ ./bscript win64
 ### Linux :
 
 Go to build/linux64/bin and run the game by launching SNAKE 
+
 ```
 sayen@:~/SNAKE$ ./SNAKE
 ```
