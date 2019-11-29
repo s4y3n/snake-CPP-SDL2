@@ -13,13 +13,21 @@ if [ "$1" = "linux" ]; then
 	else 
 		rm -r build/linux64 && cmake -H. -Bbuild/linux64 -DCMAKE_BUILD_TYPE=Debug
 	fi
-pushd build/linux64 && make && popd 
+	pushd build/linux64 && make && popd 
 else 
-
-	if [ -d build/win64 ]; then
-		rm -r build/win64 && cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/x86_64-w64-mingw32.cmake
+	if [ "$1" = "win64" ]; then 
+		if [ -d build/win64 ]; then
+			rm -r build/win64 && cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/x86_64-w64-mingw32.cmake
+		else 
+			cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/x86_64-w64-mingw32.cmake
+		fi
+		pushd build/win64 && make && popd 
 	else 
-		cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/x86_64-w64-mingw32.cmake
+		if [ -d build/win32 ]; then
+			rm -r build/win32 && cmake -H. -Bbuild/win64 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/i686-w64-mingw32.cmake
+		else 
+			cmake -H. -Bbuild/win32 -DCMAKE_BUILD_TYPE=Debug -DCMAKE_TOOLCHAIN_FILE=cmake/i686-w64-mingw32.cmake
+		fi
+		pushd build/win32 && make && popd 
 	fi
-pushd build/win64 && make && popd 
 fi
