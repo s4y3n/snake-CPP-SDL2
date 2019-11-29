@@ -26,11 +26,13 @@ For Windows 32 compile with the following command :
 ```
 sayen@:~/SNAKE$ ./bscript win32
 ```
+
 #### Windows 64 :
 For Windows 64 compile with the following command :
 ```
 sayen@:~/SNAKE$ ./bscript win64
 ```
+
 ## Run 
 
 ### Linux :
