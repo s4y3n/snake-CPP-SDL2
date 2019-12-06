@@ -1,4 +1,6 @@
 #include "game.hpp"
+#include "sound.hpp"
+
 using namespace std;
 
 Uint32 my_callbackfunc(Uint32 interval, void *param)
@@ -167,6 +169,15 @@ int Game::Launch(SDL_Renderer* rend)
 	int pauseSet = 0;
 	int lost = 0;
 	int action = 0;	
+	
+	Sound sound;
+	int soundOn = 0;
+	if(sound.Load())
+	{
+		cout << "Unable to start sound" << endl;
+		soundOn = 1;
+	}
+
 	while(!close && !lost)
 	{
 		SDL_Event event;
@@ -242,6 +253,10 @@ int Game::Launch(SDL_Renderer* rend)
 		// Drow target
 			if(snake.targetReached(cible))
 			{
+				if(!soundOn)
+				{
+					sound.Launch(1);
+				}
 				score.increment();
 				do{
 						cible.setNewPosition(snake.getHeadX(), snake.getHeadY());	
@@ -261,9 +276,17 @@ int Game::Launch(SDL_Renderer* rend)
 		}
 		else 
 		{
+			if(!soundOn)
+			{
+				sound.Launch(2);		
+			}	
 			Lost(rend);
 			SDL_Delay(5000);
 		}
+	}
+	if(!soundOn)
+	{
+		sound.close();
 	}
 	Quit();
 

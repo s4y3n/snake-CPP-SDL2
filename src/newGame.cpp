@@ -1,7 +1,6 @@
 #include "newGame.hpp"
 #include "game.hpp"
 
-
 NewGame::NewGame(int x, int y,TTF_Font* Font) : mainWindow(x,y), 
 	level1B("LEVEL 1", 50, y/4 - 40, x-100, 80),
 	level2B("LEVEL 2", 50, y/4 - 40, x-100, 80),

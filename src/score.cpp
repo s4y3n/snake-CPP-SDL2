@@ -49,8 +49,7 @@ void Score::chargeBest()
 		scoreFile2.open("score.txt");
 		for(int i = 0 ; i < 3; i++)
 		{
-			scoreFile2 << "score" << i << "=0" << endl;
-
+			scoreFile2 << "score" << i + 1 << "=0" << endl;
 		}
 		scoreFile2.close();
 	//	cout << "Enable to open file " << endl;
@@ -111,7 +110,7 @@ void Score::saveScore()
 		{
 			if(level != i + 1)
 			{
-				scoreFile2 << "score" << i << "=0" << endl;
+				scoreFile2 << "score" << i + 1 << "=0" << endl;
 			}
 			else
 			{

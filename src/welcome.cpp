@@ -2,6 +2,7 @@
 #include "newGame.hpp"
 #include "configure.hpp"
 #include "bestscores.hpp"
+#include "sound.hpp"
 
 using namespace std;
 
@@ -77,11 +78,22 @@ int Welcome::Init()
 
 void Welcome::Launch()
 {
+	Sound sound;
+	int soundOn = 0;
+	if(sound.Load())
+	{
+		cout << "Unable to start sound" << endl;
+		soundOn = 1;
+	}
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
 	DisplayStart();	
 	int close = 0;
 	int choice = 0;
+	if(!soundOn)
+	{
+		sound.Launch(6);
+	}
 	while(!close)
 	{
 		SDL_Event event;
@@ -120,6 +132,12 @@ void Welcome::Launch()
 					{
 						choice = 0;
 						NewGame newGame(SIZEX,SIZEY,Font);
+						if(!soundOn)
+						{
+							sound.Launch(6);
+							sound.close();
+							soundOn = 1;
+						}
 						close = newGame.Launch(rend);
 					}
 					break;
@@ -142,6 +160,11 @@ void Welcome::Launch()
 					DisplayStart();
 					break;
 		}
+	}
+	if(!soundOn)
+	{
+		sound.Launch(6);
+		sound.close();
 	}
 	Quit();
 }
