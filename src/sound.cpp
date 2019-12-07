@@ -5,15 +5,15 @@ Sound::Sound()
 	SMusic = "sounds/theme-music.wav";
 	gMusic = NULL;
 	//bump.mp3";
-	Ssound1 = "sounds/coin.mp3";
+	Ssound1 = "sounds/coin.wav";
 	gsound1 = NULL;
 	Ssound2 = "sounds/dead.wav";
 	gsound2 = NULL;
 	Ssound3 = "sounds/jump.wav";
 	gsound3 = NULL;
-	Ssound4 = "sounds/ping.mp3";
+	Ssound4 = "sounds/ping.wav";
 	gsound4 = NULL;
-	Ssound5 = "sounds/smash.mp3";
+	Ssound5 = "sounds/smash.wav";
 	gsound5 = NULL;	
 }
 
