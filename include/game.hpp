@@ -17,6 +17,7 @@
 #include "text.hpp"
 #include "score.hpp"
 #include "configuration.hpp"
+#include "sound.hpp"
 
 #ifndef GAME_H
 #define GAME_H
@@ -28,7 +29,7 @@ class Game{
 		void setLevel();
 		int Init();
 		void setBackGroundColor(COLOR c=BLACK);
-		int Launch(SDL_Renderer* rend);
+		int Launch(SDL_Renderer* rend, Sound S);
 		void DrawHead(SDL_Renderer* rend);
 	
 		void DrawBody(SDL_Renderer* rend);

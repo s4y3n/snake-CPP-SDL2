@@ -15,8 +15,25 @@ Sound::Sound()
 	gsound4 = NULL;
 	Ssound5 = "sounds/smash.wav";
 	gsound5 = NULL;	
+	loaded = 0;
 }
 
+Sound::Sound(const Sound &S)
+{
+	SMusic = S.SMusic;
+	gMusic = S.gMusic;
+	Ssound1 = S.Ssound1;
+	gsound1 = S.gsound1;
+	Ssound2 = S.Ssound2;
+	gsound2 = S.gsound2;
+	Ssound3 = S.Ssound3;
+	gsound3 = S.gsound3;
+	Ssound4 = S.Ssound4;
+	gsound4 = S.gsound4;
+	Ssound5 = S.Ssound5;
+	gsound5 = S.gsound5;
+	loaded = S.loaded;
+}
 
 Sound::~Sound()
 {
@@ -31,7 +48,7 @@ int Sound::Load()
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		cout << "Failed to init Audio" << endl;
-		gotIt = 1;
+		loaded = 1;
 	}
 	else 
 	{
@@ -39,40 +56,45 @@ int Sound::Load()
 		if(gMusic == NULL)
 		{
 			cout << "Failed to open music file : " << Mix_GetError() << endl;
-			gotIt = 1;
+			loaded = 1;
 		}
 		gsound1 = Mix_LoadWAV(Ssound1.c_str());
 		if(gsound1 == NULL)
 		{
 			cout << "Failed to open sound1 file : " << Mix_GetError() << endl;
-			gotIt = 1;
+			loaded = 1;
 		}
 		gsound2 = Mix_LoadWAV(Ssound2.c_str());
 		if(gsound2 == NULL)
 		{
 			cout << "Failed to open sound2 file : " << Mix_GetError() << endl;
-			gotIt = 1;
+			loaded = 1;
 		}
 		gsound3 = Mix_LoadWAV(Ssound3.c_str());
 		if(gsound3 == NULL)
 		{
 			cout << "Failed to open sound3 file : " << Mix_GetError() << endl;
-			gotIt = 1;
+			loaded = 1;
 		}
 		gsound4 = Mix_LoadWAV(Ssound4.c_str());
 		if(gsound4 == NULL)
 		{
 			cout << "Failed to open sound4 file : " << Mix_GetError() << endl;
-			gotIt = 1;
+			loaded = 1;
 		}
 		gsound5 = Mix_LoadWAV(Ssound5.c_str());
 		if(gsound5 == NULL)
 		{
 			cout << "Failed to open sound5 file : " << Mix_GetError() << endl;
-			gotIt = 1;
+			loaded = 1;
 		}
 	}
-	return gotIt;
+	return loaded;
+}
+
+int Sound::Loaded()
+{
+	return loaded;
 }
 
 void Sound::close()
@@ -89,41 +111,43 @@ void Sound::close()
 
 void Sound::Launch(int l)
 {
-	switch(l)
+	if(loaded == 0)
 	{
-		case 1 :
-			Mix_PlayChannel(-1, gsound1, 0);
-			break;
-		case 2 :
-			Mix_PlayChannel(-1, gsound2, 0);
-			break;
-		case 3 :
-			Mix_PlayChannel(-1, gsound3, 0);
-			break;
-		case 4 :
-			Mix_PlayChannel(-1, gsound4, 0);
-			break;
-		case 5 :
-			Mix_PlayChannel(-1, gsound5, 0);
-			break;
-		case 6 :
-			if(Mix_PlayingMusic() == 0)
-			{
-				Mix_PlayMusic(gMusic, -1);
-			}
-			else
-			{
-				if(Mix_PausedMusic() == 1 ) // Music paused 
+		switch(l)
+		{
+			case 1 :
+				Mix_PlayChannel(-1, gsound1, 0);
+				break;
+			case 2 :
+				Mix_PlayChannel(-1, gsound2, 0);
+				break;
+			case 3 :
+				Mix_PlayChannel(-1, gsound3, 0);
+				break;
+			case 4 :
+				Mix_PlayChannel(-1, gsound4, 0);
+				break;
+			case 5 :
+				Mix_PlayChannel(-1, gsound5, 0);
+				break;
+			case 6 :
+				if(Mix_PlayingMusic() == 0)
 				{
-					Mix_ResumeMusic();
-
-				}else
-				{
-					Mix_PauseMusic();
+					Mix_PlayMusic(gMusic, -1);
 				}
-			}
-			break;		
-	}
+				else
+				{
+					if(Mix_PausedMusic() == 1 ) // Music paused 
+					{
+						Mix_ResumeMusic();
 
+					}else
+					{
+						Mix_PauseMusic();
+					}
+				}
+				break;		
+		}
+	}
 }
 

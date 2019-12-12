@@ -1,5 +1,6 @@
 #include "newGame.hpp"
 #include "game.hpp"
+#include "sound.hpp"
 
 NewGame::NewGame(int x, int y,TTF_Font* Font) : mainWindow(x,y), 
 	level1B("LEVEL 1", 50, y/4 - 40, x-100, 80),
@@ -26,7 +27,7 @@ NewGame::~NewGame()
 	backB.Free();
 }
 
-int NewGame::Launch(SDL_Renderer* rend)
+int NewGame::Launch(SDL_Renderer* rend, Sound sound)
 {
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_RenderPresent(rend);
@@ -72,7 +73,7 @@ int NewGame::Launch(SDL_Renderer* rend)
 			}
 			else
 			{
-				if(game.Launch(rend) == 0)
+				if(game.Launch(rend, sound) == 0)
 				{
 					close = 1;
 				}

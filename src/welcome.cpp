@@ -138,14 +138,14 @@ void Welcome::Launch()
 					{
 						choice = 0;
 						NewGame newGame(SIZEX,SIZEY,Font);
-						/*
+						
 						if(!soundOn)
 						{
 							sound.Launch(6);
-							sound.close();
-							soundOn = 1;
-						}*/
-						close = newGame.Launch(rend);
+							//sound.close();
+							//soundOn = 1;
+						}
+						close = newGame.Launch(rend, sound);
 					}
 					break;
 				case 2 :

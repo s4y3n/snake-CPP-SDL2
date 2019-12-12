@@ -11,8 +11,10 @@ using namespace std;
 class Sound {
 	public :
 		Sound();
+		Sound(const Sound &S);
 		~Sound();
 		int Load();
+		int Loaded();
 		void close();
 		void Launch(int l);
 	private :
@@ -28,6 +30,7 @@ class Sound {
 		Mix_Chunk *gsound4;
 		string Ssound5;
 		Mix_Chunk *gsound5;
+		int loaded;
 };
 
 #endif
