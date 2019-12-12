@@ -41,7 +41,7 @@ void Head::moveUp()
 
 void Head::moveDown()
 {
- setY(getY() + getH()); 
+	 setY(getY() + getH()); 
 	setEyesH();
 }
 
@@ -97,4 +97,10 @@ void Head::Draw(SDL_Renderer* rend)
 	SDL_RenderFillRect(rend, getRect());	
 	rightE.Draw(rend);
 	leftE.Draw(rend);
+}
+
+void Head::setLimits(int x, int y)
+{
+	limitX = x;
+	limitY = y;	
 }

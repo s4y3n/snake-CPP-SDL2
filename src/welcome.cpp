@@ -23,15 +23,19 @@ Welcome::~Welcome()
 
 void Welcome::Quit()
 {	
+	cout << "At Quit" << endl;
 	SDL_DestroyRenderer(rend);
 	SDL_DestroyWindow(win);
 	if(Font != NULL)
 		TTF_CloseFont(Font);
+	cout << "TTF_QUIT" << endl;
 	TTF_Quit();
 	level1B.Free();
 	level2B.Free();
 	level3B.Free();
+	cout << "Before SDL_quit" << endl;
 	SDL_Quit();
+	cout << "After SDL_quit" << endl;
 }
 
 int Welcome::Init()
@@ -78,6 +82,7 @@ int Welcome::Init()
 
 void Welcome::Launch()
 {
+	
 	Sound sound;
 	int soundOn = 0;
 	if(sound.Load())
@@ -90,6 +95,7 @@ void Welcome::Launch()
 	DisplayStart();	
 	int close = 0;
 	int choice = 0;
+	
 	if(!soundOn)
 	{
 		sound.Launch(6);
@@ -132,12 +138,13 @@ void Welcome::Launch()
 					{
 						choice = 0;
 						NewGame newGame(SIZEX,SIZEY,Font);
+						/*
 						if(!soundOn)
 						{
 							sound.Launch(6);
 							sound.close();
 							soundOn = 1;
-						}
+						}*/
 						close = newGame.Launch(rend);
 					}
 					break;
@@ -161,12 +168,15 @@ void Welcome::Launch()
 					break;
 		}
 	}
+	cout << "Flag" << endl;
 	if(!soundOn)
 	{
 		sound.Launch(6);
 		sound.close();
 	}
+	cout << "Flag2" << endl;
 	Quit();
+	cout << "After quit" << endl;
 }
 
 void Welcome::DisplayStart()

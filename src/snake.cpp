@@ -28,6 +28,7 @@ void Snake::setLimits(int XMAX, int YMAX)
 {
 	limitX = XMAX;
 	limitY = YMAX;
+	head.setLimits(XMAX,YMAX);
 }
 
 void Snake::createBody(int i)

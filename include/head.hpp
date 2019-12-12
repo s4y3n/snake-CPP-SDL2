@@ -8,6 +8,7 @@ class Head : public Cell_SDL{
 	public :
 		Head(int W, int H, int X, int Y, COLOR c=RED);
 		~Head();
+		void setLimits(int x, int y);
 		void setEyesH();
 		void setEyesV();
 		void moveUp();
@@ -19,7 +20,9 @@ class Head : public Cell_SDL{
 		Cell_SDL getnextCell();
 		void Draw(SDL_Renderer* rend);
 	private : 
-		int DIRECTION ; 
+		int DIRECTION ;
+		int limitX;
+		int limitY; 
 		Eye rightE;
 		Eye leftE;
 };

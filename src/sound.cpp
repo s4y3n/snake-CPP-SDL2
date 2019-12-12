@@ -27,6 +27,7 @@ Sound::~Sound()
 int Sound::Load()
 {
 	int gotIt = 0;
+//	Mix_Init(0);
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		cout << "Failed to init Audio" << endl;
@@ -82,8 +83,8 @@ void Sound::close()
 	Mix_FreeChunk(gsound4);
 	Mix_FreeChunk(gsound5);
 	Mix_FreeMusic(gMusic);
-
-	Mix_Quit();
+//	Mix_Quit();
+	Mix_CloseAudio();
 }
 
 void Sound::Launch(int l)
