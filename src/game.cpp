@@ -159,7 +159,6 @@ int Game::Launch(SDL_Renderer* rend, Sound sound)
 {
 	DrawHead(rend);
 	DrawTarget(rend);
-	//SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	SDL_RenderPresent(rend);
 	
@@ -169,15 +168,7 @@ int Game::Launch(SDL_Renderer* rend, Sound sound)
 	int pauseSet = 0;
 	int lost = 0;
 	int action = 0;	
-	
-	//Sound sound;
-	//int soundOn = 0;
-	/*if(sound.Load())
-	{
-		cout << "Unable to start sound" << endl;
-		soundOn = 1;
-	}*/
-
+	Configuration config;	
 	while(!close && !lost)
 	{
 		SDL_Event event;
@@ -253,7 +244,7 @@ int Game::Launch(SDL_Renderer* rend, Sound sound)
 		// Drow target
 			if(snake.targetReached(cible))
 			{
-				if(!sound.Loaded())
+				if(!sound.Loaded() && config.iseffectOn())
 				{
 					sound.Launch(1);
 				}
@@ -266,7 +257,6 @@ int Game::Launch(SDL_Renderer* rend, Sound sound)
 		// Drow body
 			DrawBody(rend);
 		// Draw Background 
-	//		SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 			SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 			SDL_RenderPresent(rend);		
 		}
@@ -276,8 +266,7 @@ int Game::Launch(SDL_Renderer* rend, Sound sound)
 		}
 		else 
 		{
-			
-			if(!sound.Loaded())
+			if(!sound.Loaded() && config.iseffectOn())
 			{
 				sound.Launch(2);		
 			}	
@@ -285,13 +274,7 @@ int Game::Launch(SDL_Renderer* rend, Sound sound)
 			SDL_Delay(5000);
 		}
 	}
-	/*
-	if(!soundOn)
-	{
-		sound.close();
-	}*/
 	Quit();
-
 	if(close)
 		return 0;
 	else //lost
@@ -301,7 +284,6 @@ int Game::Launch(SDL_Renderer* rend, Sound sound)
 void Game::Pause(SDL_Renderer* rend)
 {
 	pauseText.Display(rend);
-	//SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	SDL_RenderPresent(rend);
 }
@@ -313,7 +295,6 @@ void Game::Lost(SDL_Renderer* rend)
 	scoreText.setText(Font, scoreStr.str().c_str());
 	scoreText.Display(rend);
 	lostText.Display(rend);
-	//SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
 	SDL_SetRenderDrawColor(rend, BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	SDL_RenderPresent(rend);
 }

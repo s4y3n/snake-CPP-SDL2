@@ -20,6 +20,8 @@ void Configuration::chargeDefault()
 	headColor = {255,0,0,0}; //RED;
 	bodyColor = {0,0,255,0}; //BLUE;
 	targetColor = {0,255,0,0}; // GREEN;
+	musicOn = 0;
+	effectOn = 0;
 	configSet = 0;
 }
 
@@ -49,6 +51,14 @@ void Configuration::chargeAll()
 			{
 				targetColor = parseColor(line.substr(12));
 			}
+			if(!line.compare(0,7,"musicOn"))
+			{
+				musicOn = stoi(line.substr(8));
+			}
+			if(!line.compare(0,8,"effectOn"))
+			{
+				effectOn = stoi(line.substr(9));
+			}
 		}
 		configFile.close();
 		configSet = 1;
@@ -69,6 +79,8 @@ void Configuration::saveAll()
 	configFile << "headColor=" << headColor.r << ":" << headColor.g << ":" << headColor.b << ":" << headColor.a << endl; 
 	configFile << "bodyColor=" << bodyColor.r << ":" << bodyColor.g << ":" << bodyColor.b << ":" << bodyColor.a << endl; 
 	configFile << "targetColor=" << targetColor.r << ":" << targetColor.g << ":" << targetColor.b << ":" << targetColor.a << endl;
+	configFile << "musicOn=" << musicOn << endl;
+	configFile << "effectOn=" << effectOn << endl;
 	configFile.close(); 
 }
 
@@ -238,4 +250,14 @@ Color Configuration::parseColor(string colorStr)
 	c.b = stoi(colorB);
 	c.a = stoi(colorA);
 	return c;
+}
+
+int Configuration::ismusicOn(void)
+{
+	return musicOn;
+}
+
+int Configuration::iseffectOn(void)
+{
+	return effectOn;
 }
