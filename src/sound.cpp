@@ -110,8 +110,8 @@ void Sound::close()
 	Mix_FreeChunk(gsound4);
 	Mix_FreeChunk(gsound5);
 	Mix_FreeMusic(gMusic);
-//	Mix_Quit();
-	Mix_CloseAudio();
+	Mix_Quit();
+//	Mix_CloseAudio();
 }
 
 void Sound::Launch(int l)

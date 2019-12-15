@@ -26,6 +26,9 @@ class Score {
 		int actual;
 		int displayed;
 		int level;
+		int level1;
+		int level2;
+		int level3;
 };
 
 #endif

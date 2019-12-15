@@ -33,12 +33,16 @@ class Configuration {
 		int gotConfig();
 		Color getColorFromCOLOR(COLOR C);
 		Color parseColor(string colorStr);
+		int ismusicOn(void);
+		int iseffectOn(void);
 	private :
 		int configSet;
 		Color backGroundColor;
 		Color headColor;
 		Color bodyColor;
 		Color targetColor;
+		int musicOn;
+		int effectOn;
 		string configFileName;
 };
 
