@@ -1,3 +1,8 @@
+//Project : Snake
+//Writer : Yahya LBARNOUSSI
+//Mail : yahya.lbarnoussi@gmail.com
+//Date : 15-12-2019
+
 //#include <SDL2/SDL.h>
 #include <SDL.h>
 //#include <SDL2/SDL_image.h>

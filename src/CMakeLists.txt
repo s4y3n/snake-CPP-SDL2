@@ -1,3 +1,8 @@
+#Project : Snake
+#Writer : Yahya LBARNOUSSI
+#Mail : yahya.lbarnoussi@gmail.com
+#Date : 15-12-2019
+
 message("CMAKE_SYSTEM_NAME : ${CMAKE_SYSTEM_NAME}")
 
 set(CMAKE_CXX_STANDARD 11)
