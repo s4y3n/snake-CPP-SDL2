@@ -1,3 +1,8 @@
+//Project : Snake
+//Writer : Yahya LBARNOUSSI
+//Mail : yahya.lbarnoussi@gmail.com
+//Date : 15-12-2019
+
 #include "body.hpp"
 using namespace std;
 Body::Body(int W, int H, int X, int Y, COLOR c):Cell_SDL(W,H,X,Y)

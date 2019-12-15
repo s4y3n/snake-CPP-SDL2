@@ -1,3 +1,8 @@
+//Project : Snake
+//Writer : Yahya LBARNOUSSI
+//Mail : yahya.lbarnoussi@gmail.com
+//Date : 15-12-2019
+
 #ifndef COMMON_H
 #define COMMON_H
 

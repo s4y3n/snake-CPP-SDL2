@@ -1,3 +1,8 @@
+//Project : Snake
+//Writer : Yahya LBARNOUSSI
+//Mail : yahya.lbarnoussi@gmail.com
+//Date : 15-12-2019
+
 #include "cell.hpp"
 
 Cell::Cell(int W, int H, int X, int Y) : x(X), y(Y), w(W), h(H)

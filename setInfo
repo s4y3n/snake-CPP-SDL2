@@ -1,0 +1,41 @@
+#!/bin/bash
+
+project="//Project : Snake"
+writer="//Writer : Yahya LBARNOUSSI"
+mail="//Mail   : yahya.lbarnoussi@gmail.com"
+date="//Date   : $(date +%d-%m-%Y)"
+
+info()
+{
+	echo "setInfo Script"
+	echo "Include developper info into header and source files"
+	usage
+}
+
+usage()
+{
+	echo "Usage : $0 dir"
+	echo "dir : location of the files to be modified"
+}
+
+if [ $# -eq 0 ]; then
+	echo "No arguments"
+	usage 
+	exit 1
+else 
+	echo $1
+	directory=$1
+	for i in $(ls $directory)
+	do	
+		echo "Modifying : $i"
+		echo $project > $directory/tmp.txt
+		echo $writer >> $directory/tmp.txt
+		echo $mail >> $directory/tmp.txt
+		echo $date >> $directory/tmp.txt
+		echo "" >> $directory/tmp.txt
+		cat $directory/$i >> $directory/tmp.txt
+		rm $directory/$i 
+		mv $directory/tmp.txt $directory/$i
+	done
+fi
+
