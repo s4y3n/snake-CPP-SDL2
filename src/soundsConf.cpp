@@ -1,7 +1,7 @@
-#include "bgcolor.hpp"
+#include "soundsConf.hpp"
 using namespace std;
 
-BgColor::BgColor(int W, int H, string Element, TTF_Font* Font, Color origin) : StringS(Element.c_str(),W/10, 10, 9*W/10, 50),
+SoundConf::SoundConf(int W, int H, string Element, TTF_Font* Font, Color origin) : StringS(Element.c_str(),W/10, 10, 9*W/10, 50),
 	CancelB("Cancel",10,H-60,(W/2)-20,50),
 	OkB("Ok",(W/2)+20,H-60,(W/2)-20,50), 
 	BlackChoice(50, 50, (W/2) - 25 - 50 ,W/2),
@@ -27,13 +27,13 @@ BgColor::BgColor(int W, int H, string Element, TTF_Font* Font, Color origin) : S
 	newCL = origin;
 }
 
-BgColor::~BgColor()
+SoundConf::~SoundConf()
 {
 
 }
 
 
-void BgColor::Display(SDL_Renderer* rend)
+void SoundConf::Display(SDL_Renderer* rend)
 {
 	Cell_SDL Choice(50, 50, (w/2) + 25,w/2);
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 0);
@@ -82,7 +82,7 @@ void BgColor::Display(SDL_Renderer* rend)
 	SDL_RenderPresent(rend);
 }
 
-int BgColor::pickerclicked(int Bx, int By)
+int SoundConf::pickerclicked(int Bx, int By)
 {
 	int click = 0;
 	if(BlackChoice.clicked(Bx,By) || WhiteChoice.clicked(Bx,By))
@@ -90,7 +90,7 @@ int BgColor::pickerclicked(int Bx, int By)
 	return click;
 }
 
-Color BgColor::getSelectedColor(int Bx, int By)
+Color SoundConf::getSelectedColor(int Bx, int By)
 {
 	int found = 0;
 	if(BlackChoice.clicked(Bx,By))
@@ -104,7 +104,7 @@ Color BgColor::getSelectedColor(int Bx, int By)
 	return newCL;
 }
 
-int BgColor::Launch(SDL_Renderer* rend)
+int SoundConf::Launch(SDL_Renderer* rend)
 {
 	int close = 0;
 	int choice = 0;
@@ -163,12 +163,12 @@ int BgColor::Launch(SDL_Renderer* rend)
 	return close;
 }
 
-void BgColor::setBlackChoiceColor(Color c)
+void SoundConf::setBlackChoiceColor(Color c)
 {
 	BlackChoice.chargeColor(c);
 }
 
-Color BgColor::getNewColor()
+Color SoundConf::getNewColor()
 {
 	return newCL;
 }
